@@ -1,16 +1,18 @@
 @extends('adminlte::page')
 
-@section('title',"Contar a Venda")
+@section('title',"Editar a Venda")
 
 @section('content_header')
-    <h1>{{ __('Create a new') }} Contas a Venda</h1>
+    <h1>{{ __('Edit a new') }} Contas a Venda</h1>
 @stop
 
 @section('content')
     @include('admin.includes.alert')
     <div class="card">
-        <form action="{{ route('admin.accounts-sales.store') }}" method="post" class="form" enctype="multipart/form-data">
+        <form action="{{ route('admin.accounts-sales.update', $accountSell->id) }}" method="post" class="form" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
+
             <div class="card-header">
                 <h5>{{ __('Basic Information') }}</h5>
             </div>

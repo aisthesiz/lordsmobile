@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\{
     RoleAdminController,
     UserAdminController,
 };
+use App\Http\Controllers\Web\AccountSellWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ use App\Http\Controllers\Admin\{
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('accounts-sales', [AccountSellWebController::class, 'index'])->name('web.accounts-sales.idnex');
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,7 +52,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::put('accounts/{account}/update-settings', [AccountAdminController::class, 'updateSettings'])
         ->name('accounts.update.settings');
 
-    Route::resource('accounts-sales', AccountSellController::class);
+    Route::DELETE('accounts-sales/image-remove/{id}/{image}', [AccountSellController::class, 'deleteImage'])
+        ->name('accounts-sales.delete.image');
+    Route::resource('accounts-sales', AccountSellController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';
