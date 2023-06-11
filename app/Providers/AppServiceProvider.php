@@ -6,6 +6,7 @@ use App\Repository\AccountSellRepositoryEloquent;
 use Core\Domain\Repository\AccountSellRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
             abstract: AccountSellRepositoryInterface::class,
             concrete: AccountSellRepositoryEloquent::class,
         );
+
+        Blade::directive('money', function($amount) {
+            return "<?php echo 'R$ ' . number_format($amount, 2, ',', ''); ?>";
+        });
     }
 }

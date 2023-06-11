@@ -12,19 +12,10 @@ use App\Http\Controllers\Admin\{
     UserAdminController,
 };
 use App\Http\Controllers\Web\AccountSellWebController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Web\EventWebController;
 
 Route::get('accounts-sales', [AccountSellWebController::class, 'index'])->name('web.accounts-sales.idnex');
+Route::get('events', [EventWebController::class, 'index'])->name('web.events.index');
 
 Route::get('/', function () {
     return view('welcome');

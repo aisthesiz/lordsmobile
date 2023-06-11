@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    @foreach ($accountsSales as $accountSell)
-        <div class="card">
-            <span>{{ $accountSell->title }}</span>
-            @if($accountSell->image_1)
-                <img src="{{ Storage::url($accountSell->image_1) }}" />
-            @endif
+@extends('layouts.accounts-sales')
+
+@section('title', 'Page Title')
+
+@section('content')
+
+<div class="flex">
+    @foreach($accountsSales as $item)
+        <div class="card" style="width: 18rem;">
+            <img src="{{ Storage::url($item->image_1) }}" />
+            <div>
+                <h5>{{ $item->title }}</h5>
+                <h6>@money($item->value_sell)</h6>
+                <p>{{ $item->description }}</p>
+                <x-web.whatsapp-button
+                    :text="'A conta que estou querendo: ' . route('admin.accounts-sales.edit', $item->id)"
+                ></x-web-whatsapp-button>
+            </div>
         </div>
     @endforeach
-</body>
-</html>
+</div>
+
+
+@endsection
+
+@push('js')
+@endpush
