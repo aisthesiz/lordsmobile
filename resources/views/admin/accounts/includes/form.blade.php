@@ -30,7 +30,8 @@
         name="time_start"
         label="Data de Inicio"
         required
-        value="{{ old('time_start', isset($account) ? $account->time_start->format('Y/m/d H:i') : '') }}"
+        autocomplete="off"
+        value="{{ old('time_start', isset($account) ? $account->time_start->format('Y/m/d H:i') : now()->format('Y/m/d ') . '00:00') }}"
     ></x-adminlte-input-date>
 </div>
 
@@ -40,6 +41,7 @@
         name="time_end"
         label="Data de Encerramento"
         required
-        value="{{ old('time_end', isset($account) ? $account->time_end->format('Y/m/d H:i') : '') }}"
+        autocomplete="off"
+        value="{{ old('time_end', isset($account) ? $account->time_end->format('Y/m/d H:i') : now()->addMonth()->format('Y/m/d ') . '00:00') }}"
     ></x-adminlte-input-date>
 </div>

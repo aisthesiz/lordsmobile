@@ -51,6 +51,7 @@ class AccountAdminController extends Controller
         $account->params = $settingsContent;
         if ($account->time_start > now()) {
             $account->activated_at = now();
+       
         }
         $account->save();
         return redirect()->route('admin.accounts.index')->with(['success' => 'Account created with success']);
@@ -73,7 +74,10 @@ class AccountAdminController extends Controller
      */
     public function updateSettings(Account $account, Request $request)
     {
-        dd($request->all());
+        $data = $request->all();
+        $account->params = $data['params'];
+        $account->save();
+        return redirect()->back()->with(['success' => 'Configuracoes salvas com sucesso']);
     }
 
     /**

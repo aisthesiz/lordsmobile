@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('admin.accounts.store') }}" method="post" class="form">
+        <form action="{{ route('admin.accounts.store') }}" method="post" class="form" autocomplete="off">
             @csrf
             <div class="card-header">
                 <h5>{{ __('Basic Information') }}</h5>

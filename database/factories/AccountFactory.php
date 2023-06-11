@@ -25,10 +25,8 @@ class AccountFactory extends Factory
             'lord_account_id' => fake()->numberBetween(10000000),
             'params' => '{}',
             'is_active' => fake()->boolean(),
-            'activated_at' => Carbon::now(),
-            'deactivated_at' => Carbon::now(),
             'time_start' => Carbon::now(),
-            'time_end' => Carbon::now()->addMonth(30),
+            'time_end' => Carbon::now()->addMonth(),
         ];
     }
 }

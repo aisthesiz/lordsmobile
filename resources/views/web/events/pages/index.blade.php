@@ -4,7 +4,7 @@
 
 @section('title', config('app.name', 'Eventos') . ' - Contas a Venda')
 
-@section('body_style', '')
+@section('body_style', 'antialiased')
 
 @section('content')
 
