@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\{
     RoleAdminController,
     UserAdminController,
 };
+use App\Http\Controllers\Bot\HomeBotController;
 use App\Http\Controllers\Web\AccountSellWebController;
 use App\Http\Controllers\Web\EventWebController;
 
@@ -25,7 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'auth.admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/', [HomeAdminController::class, 'index'])
         ->name('index');
@@ -46,6 +47,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::DELETE('accounts-sales/image-remove/{id}/{image}', [AccountSellController::class, 'deleteImage'])
         ->name('accounts-sales.delete.image');
     Route::resource('accounts-sales', AccountSellController::class)->except(['show']);
+});
+
+Route::middleware(['auth'])->prefix('bot')->name('bot.')->group(function(){
+    Route::get('/', [HomeBotController::class, 'index'])->name('index');
+    Route::get('/accounts/{account}/show', [HomeBotController::class, 'show'])->name('accounts.show');
+    Route::put('/accounts/{account}/update-settings', [HomeBotController::class, 'updateSettings'])
+    ->name('accounts.update.settings');
 });
 
 require __DIR__.'/auth.php';
