@@ -49,11 +49,11 @@ class AccountAdminController extends Controller
         $filePath = storage_path('configs/settings.json');
         $settingsContent = file_get_contents($filePath);
         $account->params = $settingsContent;
-        if ($account->time_start > now()) {
-            $account->activated_at = now();
-       
-        }
+        $account->params_updated_at = now();
         $account->save();
+        if ($account->time_start > now()) {
+            $account->activate();
+        }
         return redirect()->route('admin.accounts.index')->with(['success' => 'Account created with success']);
     }
 
@@ -76,6 +76,7 @@ class AccountAdminController extends Controller
     {
         $data = $request->all();
         $account->params = $data['params'];
+        $account->params_updated_at = now();
         $account->save();
         return redirect()->back()->with(['success' => 'Configuracoes salvas com sucesso']);
     }
@@ -94,7 +95,8 @@ class AccountAdminController extends Controller
      */
     public function update(UpdateAccountRequest $request, Account $account)
     {
-        //
+        $account->update($request->all());
+        return redirect()->route('admin.accounts.index')->with(['success' => 'Conta Editada com sucesso']);
     }
 
     /**

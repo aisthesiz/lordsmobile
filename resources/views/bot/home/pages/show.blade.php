@@ -10,7 +10,7 @@
 @endpush
 
 @section('content_header')
-    <h1>{{ __('Edit') }}</h1>
+    <h1>{{ __('Edit') }} #{{ $account->lord_account_id }}</h1>
 @stop
 
 @section('content')
@@ -28,7 +28,7 @@
         <form id="formsetting" action="{{ route('bot.accounts.update.settings', $account) }}" method="post">
             @csrf
             @method('PUT')
-            <input type="hidden" name="params" id="aasdada" />
+            <input type="hidden" name="params" id="all-settings" />
         </form>
     </div>
 </div>
@@ -46,7 +46,7 @@
             open: true,
             params: {!! json_encode(json_decode($account->params)) !!},
             async save(evt) {
-                document.getElementById('aasdada').value = await JSON.stringify(this.params);
+                document.getElementById('all-settings').value = await JSON.stringify(this.params);
                 document.getElementById('formsetting').submit();
             }
         }

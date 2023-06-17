@@ -23,9 +23,10 @@
             <thead>
             <tr>
                 <th style="width: 100px">#</th>
+                <th style="width: 30px">{{ __('Name') }}</th>
                 <th style="width: 30px">{{ __('Ativa') }}</th>
-                <th style="width: 100px">{{ __('Dt Ativada') }}</th>
-                <th style="width: 100px">{{ __('Dt Desativada') }}</th>
+                <th style="width: 100px">{{ __('Data Inicio') }}</th>
+                <th style="width: 100px">{{ __('Dt Final') }}</th>
                 <th style="width:120px">{{ __('Actions') }}</th>
             </tr>
             </thead>
@@ -33,14 +34,15 @@
             @foreach($accounts as $item)
                 <tr>
                     <td>{{ $item->lord_account_id }}</td>
+                    <td>{{ $item->name }}</td>
                     <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
-                    <td>{{ $item->activated_at?->format('d/m/Y') ?? '-' }}</td>
-                    <td>{{ $item->deactivated_at?->format('d/m/Y') ?? '-' }}</td>
+                    <td>{{ $item->time_start?->format('d/m/Y') ?? '-' }}</td>
+                    <td>{{ $item->time_end?->format('d/m/Y') ?? '-' }}</td>
                     <td>
                         <form class="form-inline" action="{{ route('admin.accounts.destroy', $item->id) }}" method="post">
                             @csrf
                             @method('delete')
-                            <a href="{{ route('bot.accounts.show', $item->id) }}" class="btn text-green border"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('bot.accounts.show', $item->id) }}" class="btn text-green border mx-1"><i class="fa fa-eye"></i></a>
                             <button type="submit" class="btn text-red border"><i class="fa fa-times"></i></button>
                         </form>
                     </td>

@@ -19,8 +19,11 @@ class HomeBotController extends Controller
 
     public function show(Account $account)
     {
+        if (!$account->is_active()) {
+            return redirect()->route('bot.index')->withErrors(['error' => 'Esta conta esta inativa']);
+        }
         if ($account->user_id != auth()->user()->id) {
-            return redirect()->route('bot.index')->withErrors(['404' => 'Conta não encontrada']);
+            return redirect()->route('bot.index')->withErrors(['error' => 'Conta não encontrada']);
         }
         
         return view(
@@ -37,7 +40,8 @@ class HomeBotController extends Controller
     {
         $data = $request->all();
         $account->params = $data['params'];
+        $account->params_updated_at = now();
         $account->save();
-        return redirect()->back()->with(['success' => 'Configuracoes salvas com sucesso']);
+        return redirect()->back()->with('success', 'Configuracoes salvas com sucesso');
     }
 }

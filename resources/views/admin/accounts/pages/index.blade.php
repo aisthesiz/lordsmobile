@@ -45,7 +45,8 @@
                             <form class="form-inline" action="{{ route('admin.accounts.destroy', $item->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <a href="{{ route('admin.accounts.show', $item->id) }}" class="btn text-green border"><i class="fa fa-eye"></i></a>
+                                <a href="{{ route('admin.accounts.edit', $item->id) }}" class="btn text-green border"><i class="fa fa-pen"></i></a>
+                                <a href="{{ route('admin.accounts.show', $item->id) }}" class="btn text-green border mx-1"><i class="fa fa-eye"></i></a>
                                 <button type="submit" class="btn text-red border"><i class="fa fa-times"></i></button>
                             </form>
                         </td>

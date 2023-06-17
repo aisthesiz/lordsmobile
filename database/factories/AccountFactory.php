@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -21,12 +20,16 @@ class AccountFactory extends Factory
     {
         return [
             'id' => Str::uuid(),
-            'user_id' => User::factory()->create()->id,
+            'name' => fake()->userName(),
+            'user_id' => User::first()->id,
             'lord_account_id' => fake()->numberBetween(10000000),
             'params' => '{}',
             'is_active' => fake()->boolean(),
-            'time_start' => Carbon::now(),
-            'time_end' => Carbon::now()->addMonth(),
+            'params_updated_at' => now(),
+            'params_readed_at' => now(),
+            'params_wrote_at' => now(),
+            'time_start' => now(),
+            'time_end' => now()->addMonth(),
         ];
     }
 }
