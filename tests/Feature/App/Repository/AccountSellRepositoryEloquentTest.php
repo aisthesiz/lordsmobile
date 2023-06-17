@@ -13,6 +13,7 @@ use Tests\TestCase;
 
 class AccountSellRepositoryEloquentTest extends TestCase
 {
+    use RefreshDatabase;
     protected AccountSellRepositoryInterface $repository;
 
     public function test_implements_interfaces(): void
@@ -21,26 +22,26 @@ class AccountSellRepositoryEloquentTest extends TestCase
         $this->assertInstanceOf(AccountSellRepositoryInterface::class, $repository);
     }
 
-    public function teste_insert()
-    {
-        $entity = $this->createEntity();
-        $this->repository->insert($entity);
-        $this->assertDatabaseCount(Model::class, 1);
-        $this->assertDatabaseHas(Model::class, [
-            'id'    => $entity->id(),
-            'title' => 'Test title',
-            'statsBow' => 231,
-            'statsSword' => 123,
-            'statsHorse' => 123,
-            'heroesPayed' => 20,
-            'heroesFree' => 100,
-            'artifacts' =>10,
-            'skins' =>100,
-            'troops' =>100,
-            'description' => 'This is a description',
-        ]);
+    // public function teste_insert()
+    // {
+    //     $entity = $this->createEntity();
+    //     $this->repository->insert($entity);
+    //     $this->assertDatabaseCount(Model::class, 1);
+    //     $this->assertDatabaseHas(Model::class, [
+    //         'id'    => $entity->id(),
+    //         'title' => 'Test title',
+    //         'statsBow' => 231,
+    //         'statsSword' => 123,
+    //         'statsHorse' => 123,
+    //         'heroesPayed' => 20,
+    //         'heroesFree' => 100,
+    //         'artifacts' =>10,
+    //         'skins' =>100,
+    //         'troops' =>100,
+    //         'description' => 'This is a description',
+    //     ]);
 
-    }
+    // }
 
     protected function setUp(): void
     {

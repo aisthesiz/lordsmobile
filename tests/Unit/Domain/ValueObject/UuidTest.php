@@ -32,6 +32,6 @@ class UuidTest extends TestCase
     {
         $value = RamseyUuid::uuid4()->toString();
         $uuid = new Uuid($value);
-        $this->assertEquals($value, $uuid->toString());
+        $this->assertEquals($value, $uuid);
     }
 }
