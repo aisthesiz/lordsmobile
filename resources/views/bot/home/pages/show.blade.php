@@ -14,6 +14,19 @@
 @stop
 
 @section('content')
+
+@include('admin.includes.alert')
+
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('bot.index') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('bot.index') }}">Contas</a></li>
+            <li class="breadcrumb-item active" aria-current="page">#{{ $account->lord_account_id }}</li>
+        </ol>
+      </nav>
+</div>
+
 <div x-data="init">
     <div class="card">
 
