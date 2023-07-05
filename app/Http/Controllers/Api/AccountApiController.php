@@ -29,14 +29,13 @@ class AccountApiController extends Controller
 
     protected function prepareParamsToResponse($params)
     {
-        $params = (object) $params;
-        return (object)[
-            'speedUpSettings'    => $params->speedUpSettings    ?? (object)[],
-            'connectionSettings' => $params->connectionSettings ?? (object)[],
-            'gatherSettings'     => $params->gatherSettings     ?? (object)[],
-            'rallySettings'      => $params->rallySettings      ?? (object)[],
-            'cargoShipSettings'  => $params->cargoShipSettings  ?? (object)[],
-            'supplySettings'     => $params->supplySettings     ?? (object)[],
+        return [
+            'speedUpSettings'    => $params['speedUpSettings']    ?? (object)[],
+            'connectionSettings' => $params['connectionSettings'] ?? (object)[],
+            'gatherSettings'     => $params['gatherSettings']     ?? (object)[],
+            'rallySettings'      => $params['rallySettings']      ?? (object)[],
+            'cargoShipSettings'  => $params['cargoShipSettings']  ?? (object)[],
+            'supplySettings'     => $params['supplySettings']     ?? (object)[],
         ];
     }
 }

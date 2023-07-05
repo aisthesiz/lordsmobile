@@ -57,7 +57,7 @@
     function init() {
         return {
             open: true,
-            params: {!! json_encode(json_decode($account->params)) !!},
+            params: {!! json_encode($account->params) !!},
             async save(evt) {
                 document.getElementById('all-settings').value = await JSON.stringify(this.params);
                 document.getElementById('formsetting').submit();

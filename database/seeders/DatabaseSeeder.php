@@ -41,9 +41,11 @@ class DatabaseSeeder extends Seeder
 
         $filePath = storage_path('configs/settings.json');
         $settingsContent = file_get_contents($filePath);
+        $settingsContent = json_decode($settingsContent, true);
+        // var_dump($settingsContent);die;
 
         foreach(['1625103499','1625104056','1625104223'] as $accountId) {
-            \App\Models\Account::factory()->create([
+            $account = \App\Models\Account::factory()->create([
                 'user_id' => $user01->id,
                 'lord_account_id' => $accountId,
                 'params' => $settingsContent,
@@ -51,6 +53,8 @@ class DatabaseSeeder extends Seeder
                 'time_start' => Carbon::now(),
                 'time_end' => Carbon::now()->addMonths(3),
             ]);
+            // $account->params = $settingsContent;
+            // $account->save();
         }
 
         // Reset cached roles and permissions

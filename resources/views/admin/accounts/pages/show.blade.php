@@ -306,7 +306,7 @@
     function init() {
         return {
             open: true,
-            params: {!! json_encode(json_decode($account->params)) !!},
+            params: {!! json_encode($account->params) !!},
             paramss: "",
             async save(evt) {
                 // this.paramss = await JSON.stringify(this.params);

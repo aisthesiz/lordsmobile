@@ -4,7 +4,7 @@
     <x-adminlte-input type="text"
                       name="name"
                       label="{{ __('Name') }}"
-                      value="{{ old('name', $account->user->name ?? '') }}"
+                      value="{{ old('name', $account->name ?? '') }}"
                       fgroup-class="col-md-12"/>
 </div>
 

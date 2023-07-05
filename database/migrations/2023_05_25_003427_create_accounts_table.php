@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('name')->nullable();
             $table->bigInteger('lord_account_id')->unique();
-            $table->json('params')->nullable();
+            $table->jsonb('params')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamp('params_updated_at')->nullable();
             $table->timestamp('params_readed_at')->nullable();

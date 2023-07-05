@@ -71,4 +71,24 @@ class Account extends Model
         $this->is_active = true;
         $this->save();
     }
+
+    public function compareArrays($array1, $array2, $path = '') {
+        foreach ($array1 as $key => $value1) {
+            if (isset($array2[$key])) {
+                if (is_array($value1) && is_array($array2[$key])) {
+                    $this->compareArrays($value1, $array2[$key], $path . '/' . $key);
+                } elseif ($value1 !== $array2[$key]) {
+                    echo "Difference found at path: $path/$key\n";
+                }
+            } else {
+                echo "Key '$key' not found in the second array.\n";
+            }
+        }
+    
+        foreach ($array2 as $key => $value2) {
+            if (!isset($array1[$key])) {
+                echo "Key '$key' not found in the first array.\n";
+            }
+        }
+    }
 }

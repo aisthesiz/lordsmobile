@@ -47,7 +47,7 @@ class AccountAdminController extends Controller
         $dataAccount['id'] = Str::uuid();
         $account = Account::create($dataAccount);
         $filePath = storage_path('configs/settings.json');
-        $settingsContent = file_get_contents($filePath);
+        $settingsContent = json_decode(file_get_contents($filePath));
         $account->params = $settingsContent;
         $account->params_updated_at = now();
         $account->save();
@@ -62,10 +62,11 @@ class AccountAdminController extends Controller
      */
     public function show(Account $account)
     {
-        $settings = !empty($account->params) ? json_decode($account->params) : null;
+        // $settings = !empty($account->params) ? json_decode($account->params) : null;
+        // $settings = json_encode($account->params);
         return view(
             view: 'admin.accounts.pages.show',
-            data: compact('account', 'settings'),
+            data: compact('account'),
         );
     }
 
