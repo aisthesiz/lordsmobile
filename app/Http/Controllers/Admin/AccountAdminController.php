@@ -76,10 +76,10 @@ class AccountAdminController extends Controller
     public function updateSettings(Account $account, Request $request)
     {
         $data = $request->all();
-        $account->params = $data['params'];
+        $account->params = json_decode($data['params']);
         $account->params_updated_at = now();
         $account->save();
-        return redirect()->back()->with(['success' => 'Configuracoes salvas com sucesso']);
+        return redirect()->back()->with('success', 'Configuracoes salvas com sucesso');
     }
 
     /**
