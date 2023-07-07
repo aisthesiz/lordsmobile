@@ -20,7 +20,6 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->timestamp('params_updated_at')->nullable();
             $table->timestamp('params_readed_at')->nullable();
-            $table->timestamp('params_wrote_at')->nullable();
             $table->timestamp('time_start');
             $table->timestamp('time_end');
             $table->timestamp('activated_at')->nullable();

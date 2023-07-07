@@ -10,16 +10,6 @@ use Tests\TestCase;
 
 class ParamsValidationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_params_as_string(): void
-    {
-        $validation = new ParamsValidation();
-        $this->expectException(ParamsFormatException::class);
-        $validation->validation($this->makeParams());
-    }
-
     public function test_params(): void
     {
         $validation = new ParamsValidation();

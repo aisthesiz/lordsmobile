@@ -24,7 +24,6 @@ class Account
         protected ?DateTime $timeEnd         = null,
         protected ?DateTime $paramsUpdatedAt = null,
         protected ?DateTime $paramsReadedAt  = null,
-        // protected ?DateTime $paramsWroteAt   = null,
         protected bool      $isActive        = true,
         protected ?DateTime $activatedAt     = null,
         protected ?DateTime $deactivatedAt   = null,
