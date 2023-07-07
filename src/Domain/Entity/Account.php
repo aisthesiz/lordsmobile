@@ -31,13 +31,24 @@ class Account
         if ($this->id == null) {
             $this->id = Uuid::random();
         }
+
+        $this->validateTimeAndParams();
     }
 
     public function validateTimeAndParams(): void
     {
-        if ($this->validate()) {
-            throw new EntityValidationException('This account is invalid');
+        $timeStart = new Carbon($this->timeStart);
+        $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
+
+        if ($timeStart->gt(now())) {
+            throw new EntityValidationException('timeStart is future');
         }
+
+        if (!empty($timeEnd) && $timeEnd->lt(now())) {
+            throw new EntityValidationException('timeEnd is past');
+        }
+
+        $this->validateParams();
     }
 
     public function deactivate(): void
@@ -53,7 +64,7 @@ class Account
         $this->activatedAt = new DateTime('now');
     }
 
-    public function validate() : bool
+    public function isValid() : bool
     {
         $timeStart = new Carbon($this->timeStart);
         $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
