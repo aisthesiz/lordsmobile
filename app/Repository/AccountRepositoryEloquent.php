@@ -48,26 +48,31 @@ class AccountRepositoryEloquent implements AccountRepositoryInterface
 
     public function update(Entity $entity): Entity
     {
-        if ($entityDb = $this->repository->find($entity->id()))
+        if (!$entityDb = $this->repository->find($entity->id()))
         {
             throw new NotFoundException(
-                sprintf('<%s> nto found DB registry <%s>', self::class, $entity->id()),
+                sprintf('<%s> not found DB registry <%s>', self::class, $entity->id()),
             );
         }
+        
         $data = [
             'id' => $entity->id(),
-            'might' => $entity->might,
-            'stats_sword' => $entity->statsSword,
-            'stats_bow' => $entity->statsBow,
-            'stats_horse' => $entity->statsHorse,
-            'heroes_payed' => $entity->heroesPayed,
-            'heroes_free' => $entity->heroesFree,
-            'artifacts' => $entity->artifacts,
-            'skins' => $entity->skins,
-            'troops' => $entity->troops,
-            'description' => $entity->description,
+            'name' => $entity->name,
+            'user_id' => $entity->userId,
+            'lord_account_id' => $entity->lordAccountId,
+            'params' => $entity->params,
+            'time_start' => $entity->timeStart,
+            'time_end' => $entity->timeEnd,
+            'params_updated_at' => $entity->paramsUpdatedAt,
+            'params_readed_at' => $entity->paramsReadedAt,
+            'is_active' => $entity->isActive,
+            'activated_at' => $entity->activatedAt,
+            'deactivated_at' => $entity->deactivatedAt,
         ];
-        $this->repository->updateOrFail($data);
+
+        $entityDb->updateOrFail($data);
+        $entityDb->refresh();
+
         return $this->toEntity($entityDb);
     }
 

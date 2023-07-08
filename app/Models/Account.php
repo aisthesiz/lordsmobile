@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\ParamsCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,7 +37,7 @@ class Account extends Model
         'params_readed_at'  => 'datetime',
         'time_start'        => 'datetime',
         'time_end'          => 'datetime',
-        'params'            => 'json',
+        'params'            => ParamsCast::class,
     ];
 
     public function user()

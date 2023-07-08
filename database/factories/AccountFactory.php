@@ -18,12 +18,13 @@ class AccountFactory extends Factory
      */
     public function definition(): array
     {
+        $params = json_decode(file_get_contents(storage_path('configs/settings.json')), false);
         return [
             'id' => Str::uuid(),
             'name' => fake()->userName(),
             'user_id' => User::first()->id,
             'lord_account_id' => fake()->numberBetween(10000000),
-            'params' => '{}',
+            'params' => $params,
             'is_active' => fake()->boolean(),
             'params_updated_at' => now(),
             'params_readed_at' => now(),

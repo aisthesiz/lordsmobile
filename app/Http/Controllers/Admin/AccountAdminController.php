@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Builder\AccountEntityBuilder;
 use App\Http\Controllers\Controller;
 use App\Repository\AccountRepositoryEloquent;
 use Core\Domain\Entity\Account as AccountEntity;
@@ -14,6 +15,7 @@ use Throwable;
 
 class AccountAdminController extends Controller
 {
+    
     public function __construct(
         protected AccountModel $repository,
         protected User $userRepository,
@@ -74,7 +76,7 @@ class AccountAdminController extends Controller
                 ->route('admin.accounts.index')
                 ->with('success', "Conta {$entity->name} foi criada");
         } catch (Throwable $th) {
-            $response = redirect()
+            return redirect()
                 ->back()
                 ->withInput($request->all())
                 ->withErrors(['error' => $th->getMessage()]);
@@ -117,8 +119,35 @@ class AccountAdminController extends Controller
      */
     public function update(UpdateAccountRequest $request, AccountModel $account)
     {
-        $account->update($request->all());
-        return redirect()->route('admin.accounts.index')->with(['success' => 'Conta Editada com sucesso']);
+        $repository = new AccountRepositoryEloquent(new AccountModel());
+
+        $entity = AccountEntityBuilder::createFromAccountModel($account);
+
+        $dataInput = $request->all();
+
+        try {
+            $dataInput['time_start'] = new Carbon($dataInput['time_start']);
+            $dataInput['time_end'] = new Carbon($dataInput['time_end']);
+    
+            $entity->update(
+                name:          $dataInput['name'],
+                userId:        $dataInput['user_id'],
+                lordAccountId: $dataInput['lord_account_id'],
+                timeStart:     $dataInput['time_start'],
+                timeEnd:       $dataInput['time_end'],
+            );
+    
+            $repository->update($entity);
+    
+            return redirect()
+                ->route('admin.accounts.index')
+                ->with(['success' => 'Conta Editada com sucesso']);
+        } catch (Throwable $th) {
+            return redirect()
+                ->back()
+                ->withInput($request->all())
+                ->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
     /**
