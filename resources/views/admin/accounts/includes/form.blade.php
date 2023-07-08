@@ -45,3 +45,18 @@
         value="{{ old('time_end', isset($account) ? $account->time_end->format('Y/m/d H:i') : now()->addMonth()->format('Y/m/d ') . '00:00') }}"
     ></x-adminlte-input-date>
 </div>
+
+<div class="row">
+    <div class="custom-control custom-checkbox">
+        <input type="hidden" name="is_active" value="0" />
+        <input
+            class="custom-control-input"
+            type="checkbox"
+            id="is_active"
+            name="is_active"
+            value="1"
+            {{ old('is_active', $account->is_active ?? '') == '1' ? 'checked="checked"' : '' }}>
+        <label for="is_active" class="custom-control-label">Ativa</label>
+    </div>
+</div>
+
