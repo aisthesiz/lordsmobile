@@ -48,8 +48,7 @@ class AccountRepositoryEloquent implements AccountRepositoryInterface
 
     public function update(Entity $entity): Entity
     {
-        if (!$entityDb = $this->repository->find($entity->id()))
-        {
+        if (!$entityDb = $this->repository->find($entity->id())) {
             throw new NotFoundException(
                 sprintf('<%s> not found DB registry <%s>', self::class, $entity->id()),
             );

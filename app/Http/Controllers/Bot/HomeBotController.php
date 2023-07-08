@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Bot;
 
+use App\Builder\AccountEntityBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
+use App\Repository\AccountRepositoryEloquent;
 use Illuminate\Http\Request;
+use Throwable;
 
 class HomeBotController extends Controller
 {
@@ -38,10 +41,18 @@ class HomeBotController extends Controller
      */
     public function updateSettings(Account $account, Request $request)
     {
-        $data = $request->all();
-        $account->params = json_decode($data['params']);
-        $account->params_updated_at = now();
-        $account->save();
-        return redirect()->back()->with('success', 'Configuracoes salvas com sucesso');
+        try {
+            $params = json_decode(json_encode($request->all()));
+    
+            $entity = AccountEntityBuilder::createFromAccountModel($account);
+            $entity->updateParams($params);
+    
+            $resitory = new AccountRepositoryEloquent($account);
+            $resitory->update($entity);
+    
+            return response()->noContent();
+        } catch (Throwable $th) {
+            return response()->json()->setStatusCode($th->getCode());
+        }
     }
 }

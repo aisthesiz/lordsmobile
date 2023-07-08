@@ -2,6 +2,7 @@
 
 @section('plugins.jQuery UI', true)
 @section('plugins.select2', true)
+@section('plugins.toastr', true)
 
 @section('title', "Contas Lord Mobile")
 
@@ -57,11 +58,26 @@
     function init() {
         return {
             open: true,
-            params: {!! json_encode($account->params) !!},
             async save(evt) {
-                document.getElementById('all-settings').value = await JSON.stringify(this.params);
-                document.getElementById('formsetting').submit();
-            }
+                let response = await fetch("{{ route('bot.accounts.update.settings', $account) }}",{
+                    method: 'PUT',
+                    cache: "no-cache",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    redirect: 'error',
+                    body: await JSON.stringify(this.params),
+                });
+
+                if(response.status == 204) {
+                    toastr.success('Configurações Salvas com Sucesso');
+                } else {
+                    toastr.error('Configurações não foram salvas. Recarregue a pagina');
+                }
+            },
+            params: {!! json_encode($account->params) !!},
         }
     }
 </script>
