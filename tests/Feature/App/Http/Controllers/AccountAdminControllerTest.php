@@ -90,9 +90,10 @@ class AccountAdminControllerTest extends TestCase
     public function test_update()
     {
         $user = User::factory()->create();
+        $user2 = User::factory()->create();
 
         $payload = [
-            'user_id'         => $user->id,
+            'user_id'         => $user2->id,
             "name"            => "Account 001",
             "lord_account_id" => 37465387654,
             'time_start'      => '2023/06/07 00:00',
