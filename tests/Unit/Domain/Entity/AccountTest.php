@@ -132,4 +132,30 @@ class AccountTest extends AccountBase
 
         $this->assertTrue($account->isValid());
     }
+
+    public function test_update()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subDay(),
+            timeEnd:       now()->addDay(),
+            isActive:      true,
+        );
+
+        $account->update(
+            "Updated",
+            101,
+            11111111111111,
+            now()->subHours(4),
+            now()->addDay(5),
+        );
+
+        $this->assertEquals('Updated', $account->name);
+        $this->assertEquals(101, $account->userId);
+        $this->assertEquals(now()->subHours(4)->format('Y-m-d H:i'), $account->timeStart->format('Y-m-d H:i'));
+        $this->assertEquals(now()->addDay(5)->format('Y-m-d H:i'), $account->timeEnd->format('Y-m-d H:i'));
+    }
 }

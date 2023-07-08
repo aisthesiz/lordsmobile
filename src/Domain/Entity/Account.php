@@ -85,6 +85,22 @@ class Account
         return true;
     }
 
+    public function update(
+        string $name, 
+        int $userId, 
+        int $lordAccountId, 
+        DateTime $timeStart,
+        DateTime $timeEnd,
+    ) {
+        $this->name   = $name;
+        $this->userId = $userId;
+        $this->lordAccountId = $lordAccountId;
+        $this->timeStart     = $timeStart;
+        $this->timeEnd       = $timeEnd;
+
+        $this->validateTimeAndParams();
+    }
+
     public function updateParams(object $newParams): void
     {
         $validateParams = new ParamsValidation();
