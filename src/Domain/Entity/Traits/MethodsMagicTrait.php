@@ -8,7 +8,7 @@ trait MethodsMagicTrait
 {
     public function __get($param)
     {
-        if(isset($this->{$param})) {
+        if(property_exists($this, $param)) {
             return $this->{$param};
         }
         
