@@ -18,8 +18,9 @@ class Account
     public function __construct(
         protected int       $userId,
         protected int       $lordAccountId,
-        protected object    $params,
+        protected stdClass  $params,
         protected DateTime  $timeStart,
+        protected ?string   $name            = "",
         protected ?Uuid     $id              = null,
         protected ?DateTime $timeEnd         = null,
         protected ?DateTime $paramsUpdatedAt = null,
@@ -92,13 +93,6 @@ class Account
         $this->params = $newParams;
         $this->paramsUpdatedAt = new DateTime('now');
     }
-
-    public function getParamsUpdatedAt(): DateTime|null
-    {
-        return $this->paramsUpdatedAt;
-    }
-
-
 
     public function validateParams(): void
     {

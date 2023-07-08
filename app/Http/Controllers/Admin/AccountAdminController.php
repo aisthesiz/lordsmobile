@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
-use App\Http\Requests\Admin\Account\StoreAccountRequest;
-use App\Http\Requests\Admin\Account\UpdateAccountRequest;
-use App\Models\Account;
-use App\Models\User;
+use App\Repository\AccountRepositoryEloquent;
+use Core\Domain\Entity\Account as AccountEntity;
+use App\Http\Requests\Admin\Account\{StoreAccountRequest, UpdateAccountRequest};
+use App\Models\{User, Account as AccountModel};
+use Carbon\Carbon;
+use Core\Domain\ValueObject\Uuid;
 use Illuminate\Http\Request;
+use Throwable;
 
 class AccountAdminController extends Controller
 {
     public function __construct(
-        protected Account $repository,
+        protected AccountModel $repository,
         protected User $userRepository,
     ) {}
 
@@ -38,29 +40,48 @@ class AccountAdminController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreAccountRequest $request)
     {
-        $dataAccount = $request->all();
-        $dataAccount['id'] = Str::uuid();
-        $account = Account::create($dataAccount);
-        $filePath = storage_path('configs/settings.json');
-        $settingsContent = json_decode(file_get_contents($filePath));
-        $account->params = $settingsContent;
-        $account->params_updated_at = now();
-        $account->save();
-        if ($account->time_start > now()) {
-            $account->activate();
+        $data = $request->all();
+        $repository = new AccountRepositoryEloquent(new AccountModel());
+
+        try {
+            $data['time_start'] = new Carbon($data['time_start']);
+            $data['time_end']   = new Carbon($data['time_end']);
+            $data['is_active']  = $data['is_active'] == '1' ? true : false;
+
+            $params = json_decode(file_get_contents(storage_path('configs/settings.json')));
+    ;
+            $entity = new AccountEntity(
+                userId:        $data['user_id'],
+                lordAccountId: $data['lord_account_id'],
+                params:        $params,
+                timeStart:     $data['time_start'],
+                name:          $data['name'],
+                id:            Uuid::random(),
+                timeEnd:       $data['time_end'],
+            );
+            
+            if ($data['is_active']) {
+                $entity->activate();
+            } else {
+                $entity->deactivate();
+            }
+
+            $repository->insert($entity);
+
+            return redirect()
+                ->route('admin.accounts.index')
+                ->with('success', "Conta {$entity->name} foi criada");
+        } catch (Throwable $th) {
+            $response = redirect()
+                ->back()
+                ->withInput($request->all())
+                ->withErrors(['error' => $th->getMessage()]);
         }
-        return redirect()->route('admin.accounts.index')->with(['success' => 'Account created with success']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Account $account)
+    public function show(AccountModel $account)
     {
         // $settings = !empty($account->params) ? json_decode($account->params) : null;
         // $settings = json_encode($account->params);
@@ -73,7 +94,7 @@ class AccountAdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function updateSettings(Account $account, Request $request)
+    public function updateSettings(AccountModel $account, Request $request)
     {
         $data = $request->all();
         $account->params = json_decode($data['params']);
@@ -85,7 +106,7 @@ class AccountAdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Account $account)
+    public function edit(AccountModel $account)
     {
         $users = $this->userRepository->select(['id', 'name'])->get();
         return view('admin.accounts.pages.edit', compact('account', 'users'));
@@ -94,7 +115,7 @@ class AccountAdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAccountRequest $request, Account $account)
+    public function update(UpdateAccountRequest $request, AccountModel $account)
     {
         $account->update($request->all());
         return redirect()->route('admin.accounts.index')->with(['success' => 'Conta Editada com sucesso']);
@@ -103,7 +124,7 @@ class AccountAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account)
+    public function destroy(AccountModel $account)
     {
         //
     }

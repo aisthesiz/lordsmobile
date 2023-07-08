@@ -118,10 +118,10 @@ class AccountParamsTest extends AccountBase
         $newParams->rallySettings->addBuffers = true;
         $account->updateParams($newParams);
 
-        $this->assertNotEmpty($account->getParamsUpdatedAt());
+        $this->assertNotEmpty($account->paramsUpdatedAt);
         $this->assertEquals(
             now()->format('Y-m-d H:i'),
-            $account->getParamsUpdatedAt()->format('Y-m-d H:i')
+            $account->paramsUpdatedAt->format('Y-m-d H:i')
         );
     }
 }
