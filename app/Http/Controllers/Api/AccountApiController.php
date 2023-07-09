@@ -30,16 +30,16 @@ class AccountApiController extends Controller
     protected function prepareParamsToResponse($params)
     {
         return [
-            'speedUpSettings'    => $params['speedUpSettings']    ?? (object)[],
-            'gatherSettings'     => $params['gatherSettings']     ?? (object)[],
-            'rallySettings'      => $params['rallySettings']      ?? (object)[],
-            'connectionSettings' => $params['connectionSettings'] ?? (object)[],
-            'cargoShipSettings'  => $params['cargoShipSettings']  ?? (object)[],
-            'supplySettings'     => $params['supplySettings']     ?? (object)[],
-            'heroSettings'       => $params['heroSettings']       ?? (object)[],
-            'heroStageSettings'  => $params['heroStageSettings']  ?? (object)[],
-            'arenaSettings'      => $params['arenaSettings']      ?? (object)[],
-            'buildSettings'      => $params['buildSettings']      ?? (object)[],
+            'speedUpSettings'    => $params->speedUpSettings    ?? (object)[],
+            'gatherSettings'     => $params->gatherSettings     ?? (object)[],
+            'rallySettings'      => $params->rallySettings      ?? (object)[],
+            'connectionSettings' => $params->connectionSettings ?? (object)[],
+            'cargoShipSettings'  => $params->cargoShipSettings  ?? (object)[],
+            'supplySettings'     => $params->supplySettings     ?? (object)[],
+            'heroSettings'       => $params->heroSettings       ?? (object)[],
+            'heroStageSettings'  => $params->heroStageSettings  ?? (object)[],
+            'arenaSettings'      => $params->arenaSettings      ?? (object)[],
+            'buildSettings'      => $params->buildSettings      ?? (object)[],
         ];
     }
 }
