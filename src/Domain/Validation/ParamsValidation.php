@@ -14,6 +14,10 @@ class ParamsValidation
         $this->validateSpeedUpSettings($params->speedUpSettings ?? null);
         $this->validateGatherSettings($params->gatherSettings ?? null);
         $this->validateRallySettings($params->rallySettings ?? null);
+
+        $this->validateHeroSettings($params->heroSettings ?? null);
+        $this->validateHeroStageSettings($params->heroStageSettings ?? null);
+        $this->validateArenaSettings($params->arenaSettings ?? null);
     }
 
     public function validateGatherSettings($gatherSettings)
@@ -89,6 +93,43 @@ class ParamsValidation
 
         $this->validateBooleanArray($rallySettings->levelToAttack, 6, 'rallySettings->levelToAttack');
     }
+
+    protected function validateHeroSettings($heroSettings)
+    {
+        $this->validateBoolean($heroSettings->autoHireHeros, 'heroSettings->autoHireHeros');
+        $this->validateBoolean($heroSettings->autoEnhanceHeros, 'heroSettings->autoEnhanceHeros');
+        $this->validateBoolean($heroSettings->useLevelUpItems, 'heroSettings->useLevelUpItems');
+        $this->validateBoolean($heroSettings->autoUpgradeHeros, 'heroSettings->autoUpgradeHeros');
+        $this->validateBoolean($heroSettings->reviveDeadLeader, 'heroSettings->reviveDeadLeader');
+
+        $this->validateBoolean($heroSettings->useBraveheartItems, 'heroSettings->useBraveheartItems');
+    }
+    
+    protected function validateHeroStageSettings($heroStageSettings)
+    {
+        $this->validateBoolean($heroStageSettings->AutoAttackHeroStages, 'heroStageSettings->AutoAttackHeroStages');
+        $this->validateBoolean($heroStageSettings->priorityMode, 'heroStageSettings->priorityMode');
+        $this->validateBoolean($heroStageSettings->selectedChapter->QuickFightStage, 'heroStageSettings->selectedChapter->QuickFightStage');
+        $this->validateBoolean($heroStageSettings->selectedChapter->useVipSweep, 'heroStageSettings->selectedChapter->useVipSweep');
+        
+        $this->validateInteger($heroStageSettings->attackStageType, 'heroStageSettings.attackStageType');
+        $this->validateInteger($heroStageSettings->seqAttackStageType, 'heroStageSettings.seqAttackStageType');
+    }
+
+    protected function validateArenaSettings($arenaSettings)
+    {
+        $this->validateBoolean($arenaSettings->attackArena, 'arenaSettings->attackArena');
+        $this->validateBoolean($arenaSettings->attackGuildmates, 'arenaSettings->attackGuildmates');
+        $this->validateBoolean($arenaSettings->collectGems, 'arenaSettings->collectGems');
+        $this->validateBoolean($arenaSettings->buyExtraAttempts, 'arenaSettings->buyExtraAttempts');
+        
+        $this->validateInteger($arenaSettings->attemptsToBuy, 'arenaSettings->attemptsToBuy');
+        $this->validateInteger($arenaSettings->minWinChance, 'arenaSettings->minWinChance');
+        $this->validateInteger($arenaSettings->maxWinChance, 'arenaSettings->maxWinChance');
+        $this->validateInteger($arenaSettings->arenaHeroType, 'arenaSettings->arenaHeroType');
+        $this->validateInteger($arenaSettings->arenaDefenderType, 'arenaSettings->arenaDefenderType');
+    }
+
 
     public function validateNull($value, $nameField)
     {

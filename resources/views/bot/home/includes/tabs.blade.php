@@ -3,6 +3,7 @@
 
     <div id="tabs">
         <ul>
+            <li><a href="#tabs-6">Heroes</a></li>
             <li><a href="#tabs-1">Geral</a></li>
             <li><a href="#tabs-2">Coleta</a></li>
             <li><a href="#tabs-3">Ninho</a></li>
@@ -23,6 +24,9 @@
         </div>
         <div id="tabs-5">
             @include('bot.home.includes.supply')
+        </div>
+        <div id="tabs-6">
+            @include('bot.home.includes.heroes')
         </div>
     </div>
 
