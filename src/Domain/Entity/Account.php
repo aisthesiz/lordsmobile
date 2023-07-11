@@ -42,11 +42,11 @@ class Account
         $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
 
         if ($timeStart->gt(now())) {
-            throw new EntityValidationException('timeStart is future');
+            throw new EntityValidationException('timeStart is future', 422);
         }
 
         if (!empty($timeEnd) && $timeEnd->lt(now())) {
-            throw new EntityValidationException('timeEnd is past');
+            throw new EntityValidationException('timeEnd is past', 422);
         }
 
         $this->validateParams();
