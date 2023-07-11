@@ -40,6 +40,7 @@ class AccountApiController extends Controller
             'heroStageSettings'  => $params->heroStageSettings  ?? (object)[],
             'arenaSettings'      => $params->arenaSettings      ?? (object)[],
             'buildSettings'      => $params->buildSettings      ?? (object)[],
+            'eventSettings'      => $params->eventSettings      ?? (object)[],
         ];
     }
 }
