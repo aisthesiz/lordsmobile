@@ -54,23 +54,26 @@ class AccountAdminControllerTest extends TestCase
     {
         return [
             [123123, "Nome", 7783643764, '2023/07/07 00:00', '2023/07/10 00:00', '1', 'user_id'],
-            [123, "Nome", 7783643764, '2023/07/07 00:00', '2023/07/10 00:00', '1', 'user_id'],
-            [3, "Nome", '', '2023/07/07 00:00', '2023/07/10 00:00', '1', 'lord_account_id'],
-            [3, "Nome", 8378563476, '', '2023/07/10 00:00', '1', 'time_start'],
-            [3, "Nome", 8378563476, '2023/07/07 00:00', '', '1', 'time_end'],
-            [3, "Nome", "Rodolfo", '2023/07/07 00:00', '2023/10/07 00:00', '', 'lord_account_id'],
+            [123,    "Nome", 7783643764, '2023/07/07 00:00', '2023/07/10 00:00', '1', 'user_id'],
+            [3,      "Nome", '', '2023/07/07 00:00', '2023/07/10 00:00', '1', 'lord_account_id'],
+            [3,      "Nome", 8378563476, '', '2023/07/10 00:00', '1', 'time_start'],
+            [3,      "Nome", 8378563476, '2023/07/07 00:00', '', '1', 'time_end'],
+            [3,      "Nome", "Rodolfo", '2023/07/07 00:00', '2023/10/07 00:00', '', 'lord_account_id'],
         ];
     }
 
     public function test_store_with_valid_params() {
-        $user = User::factory()->create();
+        $user = User::factory()->count(10)->create();
+
+        $dateIni = now()->subDays(10);
+        $dateEnd = now()->addMonths(4);
 
         $payload = [
-            'user_id'         => $user->id,
+            'user_id'         => $user[5]->id,
             "name"            => "Account 001",
             "lord_account_id" => 37465387654,
-            'time_start'      => '2023/06/07 00:00',
-            'time_end'        => '2023/07/10 00:00',
+            'time_start'      => $dateIni->format('Y/m/d H:i'),
+            'time_end'        => $dateEnd->format('Y/m/d H:i'),
             'is_active'       => '1',
         ];
 
@@ -83,6 +86,9 @@ class AccountAdminControllerTest extends TestCase
             ['Accept' => 'application/json'],
         );
 
+        $payload['time_start'] = $dateIni->format('Y-m-d H:i:00');
+        $payload['time_end']   = $dateEnd->format('Y-m-d H:i:00');
+
         $response->assertStatus(302);
         $this->assertDatabaseHas('accounts', $payload);
     }
@@ -92,12 +98,15 @@ class AccountAdminControllerTest extends TestCase
         $user = User::factory()->create();
         $user2 = User::factory()->create();
 
+        $dateIni = now()->subDays(10);
+        $dateEnd = now()->addMonths(4);
+
         $payload = [
             'user_id'         => $user2->id,
             "name"            => "Account 001",
             "lord_account_id" => 37465387654,
-            'time_start'      => '2023/06/07 00:00',
-            'time_end'        => '2023/07/10 00:00',
+            'time_start'      => $dateIni->format('Y/m/d H:i'),
+            'time_end'        => $dateEnd->format('Y/m/d H:i'),
             'is_active'       => '1',
         ];
         
@@ -113,6 +122,10 @@ class AccountAdminControllerTest extends TestCase
         );
 
         $response->assertStatus(302);
+
+        $payload['time_start'] = $dateIni->format('Y-m-d H:i:00');
+        $payload['time_end']   = $dateEnd->format('Y-m-d H:i:00');
+
         $this->assertDatabaseHas('accounts', $payload);
     }
  
@@ -120,12 +133,15 @@ class AccountAdminControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $dateIni = now()->subDays(10);
+        $dateEnd = now()->addMonths(4);
+
         $payload = [
             'user_id'         => $user->id . '123',
             "name"            => "Account 001",
             "lord_account_id" => 37465387654,
-            'time_start'      => '2023/06/07 00:00',
-            'time_end'        => '2023/07/10 00:00',
+            'time_start'      => $dateIni->format('Y/m/d H:i'),
+            'time_end'        => $dateEnd->format('Y/m/d H:i'),
             'is_active'       => '1',
         ];
         
