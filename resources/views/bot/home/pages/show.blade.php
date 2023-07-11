@@ -50,14 +50,14 @@
 
 @push('js')
 <script>
-
+    
     $( function() {
         $( "#tabs" ).tabs();
     } );
 
     function init() {
+
         return {
-            open: true,
             async save(evt) {
                 let response = await fetch("{{ route('bot.accounts.update.settings', $account) }}",{
                     method: 'PUT',
@@ -71,12 +71,34 @@
                     body: await JSON.stringify(this.params),
                 });
 
-                if(response.status == 204) {
+                if(response.status == 200) {
                     toastr.success('Configurações Salvas com Sucesso');
                 } else {
                     toastr.error('Configurações não foram salvas. Recarregue a pagina');
                 }
             },
+            fgApplyAll(evt) {
+                let list = Object.keys(this.params.eventSettings.guildFest.gfMissionComplete.missionsToComplete_);
+                list.map(index => {
+                    if(this.fg.minOrMax == 1) {
+                        this.params.eventSettings.guildFest.gfMissionComplete.missionsToComplete_[index].TakeIfHigherThanPoints = this.fg.valueForAll;
+                    } else {
+                        this.params.eventSettings.guildFest.gfMissionComplete.missionsToComplete_[index].MaxPoints = this.fg.valueForAll;
+                    }
+                });
+            },
+            emptyString(value) {
+                if(value == undefined) {
+                    return '';
+                }
+                return value;
+            },
+            open: true,
+            fg: {
+                valueForAll: 100,
+                minOrMax: 1
+            },
+            missionsNames: {!! json_encode($missionsNames) !!},
             params: {!! json_encode($account->params) !!},
         }
     }

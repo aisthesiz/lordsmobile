@@ -3,6 +3,7 @@
 
     <div id="tabs">
         <ul>
+            <li><a href="#tabs-8">FG</a></li>
             <li><a href="#tabs-1">Geral</a></li>
             <li><a href="#tabs-2">Coleta</a></li>
             <li><a href="#tabs-3">Ninho</a></li>
@@ -31,6 +32,9 @@
         </div>
         <div id="tabs-7">
             @include('bot.home.includes.build')
+        </div>
+        <div id="tabs-8">
+            @include('bot.home.includes.guild-fest')
         </div>
     </div>
 
