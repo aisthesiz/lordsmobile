@@ -155,7 +155,7 @@
                         <td x-text="missionsNames[index]"></td>
                         <td><input type="checkbox" x-model="item.ToComplete"/></td>
                         <td><input type="number" class="sm" step="1" x-model.number="item.TakeIfHigherThanPoints"/></td>
-                        <td><input type="number" class="sm" step="1" x-model.number="item.MaxPoints"/></td>
+                        <td><input type="number" max="355" class="sm" step="1" x-model.number="item.MaxPoints"/></td>
                         <td x-text="item.IsAutomated == 0 ? 'Não' : item.IsAutomated == 1 ? 'Parcial' : 'Sim'"></td>
                     </tr>
                     </template>
