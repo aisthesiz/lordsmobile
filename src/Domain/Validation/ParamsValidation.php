@@ -23,10 +23,38 @@ class ParamsValidation
         $this->validateHeroStageSettings($params->heroStageSettings ?? null);
         $this->validateArenaSettings($params->arenaSettings ?? null);
         $this->validateBuildSettings($params->buildSettings ?? null);
+        $this->validateEventSettings($params->eventSettings);
+    }
+
+    protected function validateEventSettings($eventSettings)
+    {
+        if (is_null($eventSettings)) {
+            throw new ParamsFormatException("\"eventSettings\" cant be null", 422);
+        }
+
+        $this->validateBoolean($eventSettings->guildFest->collectRewards, 'eventSettings->guildFest->collectRewards');
+        $this->validateInteger($eventSettings->guildFest->lastExportHash, 'eventSettings->guildFest->lastExportHash');
+        
+        $this->validateBoolean($eventSettings->guildFest->gfMissionComplete->completeMissions, 'eventSettings->guildFest->gfMissionComplete->completeMissions');
+        $this->validateBoolean($eventSettings->guildFest->gfMissionComplete->buyExtraMission, 'eventSettings->guildFest->gfMissionComplete->buyExtraMission');
+        $this->validateBoolean($eventSettings->guildFest->gfMissionComplete->mToMailPlayer, 'eventSettings->guildFest->gfMissionComplete->mToMailPlayer');
+        $this->validateBoolean($eventSettings->guildFest->gfMissionComplete->mNonAutoOnly, 'eventSettings->guildFest->gfMissionComplete->mNonAutoOnly');
+        $this->validateInteger($eventSettings->guildFest->gfMissionComplete->itemToBuy, 'eventSettings->guildFest->gfMissionComplete->itemToBuy');
+        $this->validateString($eventSettings->guildFest->gfMissionComplete->mMailPlayerName, 'eventSettings->guildFest->gfMissionComplete->mMailPlayerName');
+
+        foreach ($eventSettings->guildFest->gfMissionComplete->missionsToComplete_ as $key => $item) {
+            $this->validateBoolean($item->ToComplete, "eventSettings->guildFest->gfMissionComplete->missionsToComplete_[{$key}]->ToComplete");
+            $this->validateInteger($item->TakeIfHigherThanPoints, "eventSettings->guildFest->gfMissionComplete->missionsToComplete_[{$key}]->TakeIfHigherThanPoints");
+            $this->validateInteger($item->MaxPoints, "eventSettings->guildFest->gfMissionComplete->missionsToComplete[{$key}]->MaxPoints");
+            $this->validateInteger($item->IsAutomated, "eventSettings->guildFest->gfMissionComplete->missionsToComplete_[{$key}]->IsAutomated");
+        }
     }
 
     protected function validateSupplySettings($supplySettings)
     {
+        if (is_null($supplySettings)) {
+            throw new ParamsFormatException("\"supplySettings\" cant be null", 422);
+        }
         $this->validateBoolean($supplySettings->sendResources, 'supplySettings->sendResources');
         $this->validateBoolean($supplySettings->useBagResource, 'supplySettings->useBagResource');
         $this->validateBoolean($supplySettings->randomizeSpeed, 'supplySettings->randomizeSpeed');
@@ -45,6 +73,9 @@ class ParamsValidation
 
     protected function validateCargoShipSettings($cargoShipSettings)
     {
+        if (is_null($cargoShipSettings)) {
+            throw new ParamsFormatException("\"cargoShipSettings\" cant be null", 422);
+        }
         $this->validateBoolean($cargoShipSettings->allowTrading, 'cargoShipSettings->allowTrading');
         $this->validateBoolean($cargoShipSettings->tradeFood, 'cargoShipSettings->tradeFood');
         $this->validateBoolean($cargoShipSettings->tradeStone, 'cargoShipSettings->tradeStone');
@@ -67,6 +98,9 @@ class ParamsValidation
 
     protected function validateConnectionSettings($connectionSettings)
     {
+        if (is_null($connectionSettings)) {
+            throw new ParamsFormatException("\"connectionSettings\" cant be null", 422);
+        }
         $this->validateString($connectionSettings->savedProxy, 'connectionSettings.savedProxy');
         
         $this->validateBoolean($connectionSettings->isTaiwan, 'connectionSettings.isTaiwan');
@@ -121,6 +155,9 @@ class ParamsValidation
 
     public function validateSpeedUpSettings($speedUpSettings)
     {
+        if (is_null($speedUpSettings)) {
+            throw new ParamsFormatException("\"speedUpSettings\" cant be null", 422);
+        }
 
         $this->validateNull($speedUpSettings, 'speedUpSettings');
         $this->validateBoolean($speedUpSettings->useSpeedUps, 'speedUpSettings.useSpeedUps');
@@ -144,6 +181,9 @@ class ParamsValidation
 
     protected function validateRallySettings($rallySettings)
     {
+        if (is_null($rallySettings)) {
+            throw new ParamsFormatException("\"rallySettings\" cant be null", 422);
+        }
         $this->validateBoolean($rallySettings->joinRallies, 'rallySettings->joinRallies');
         $this->validateBoolean($rallySettings->craftEssences, 'rallySettings->craftEssences');
         $this->validateBoolean($rallySettings->dontFillRally, 'rallySettings->dontFillRally');
@@ -166,6 +206,9 @@ class ParamsValidation
 
     protected function validateHeroSettings($heroSettings)
     {
+        if (is_null($heroSettings)) {
+            throw new ParamsFormatException("\"heroSettings\" cant be null", 422);
+        }
         $this->validateBoolean($heroSettings->autoHireHeros, 'heroSettings->autoHireHeros');
         $this->validateBoolean($heroSettings->autoEnhanceHeros, 'heroSettings->autoEnhanceHeros');
         $this->validateBoolean($heroSettings->useLevelUpItems, 'heroSettings->useLevelUpItems');
@@ -177,6 +220,9 @@ class ParamsValidation
     
     protected function validateHeroStageSettings($heroStageSettings)
     {
+        if (is_null($heroStageSettings)) {
+            throw new ParamsFormatException("\"heroStageSettings\" cant be null", 422);
+        }
         $this->validateBoolean($heroStageSettings->AutoAttackHeroStages, 'heroStageSettings->AutoAttackHeroStages');
         $this->validateBoolean($heroStageSettings->priorityMode, 'heroStageSettings->priorityMode');
         $this->validateBoolean($heroStageSettings->selectedChapter->QuickFightStage, 'heroStageSettings->selectedChapter->QuickFightStage');
@@ -188,6 +234,9 @@ class ParamsValidation
 
     protected function validateArenaSettings($arenaSettings)
     {
+        if (is_null($arenaSettings)) {
+            throw new ParamsFormatException("\"arenaSettings\" cant be null", 422);
+        }
         $this->validateBoolean($arenaSettings->attackArena, 'arenaSettings->attackArena');
         $this->validateBoolean($arenaSettings->attackGuildmates, 'arenaSettings->attackGuildmates');
         $this->validateBoolean($arenaSettings->collectGems, 'arenaSettings->collectGems');
@@ -203,6 +252,9 @@ class ParamsValidation
 
     protected function validateBuildSettings($buildSettings)
     {
+        if (is_null($buildSettings)) {
+            throw new ParamsFormatException("\"buildSettings\" cant be null", 422);
+        }
         $this->validateBoolean($buildSettings->autoBuild, 'buildSettings->autoBuild');
         $this->validateBoolean($buildSettings->buildByLowestLevel, 'buildSettings->buildByLowestLevel');
         $this->validateBoolean($buildSettings->ignoreSpamTarget, 'buildSettings->ignoreSpamTarget');
@@ -218,35 +270,35 @@ class ParamsValidation
     public function validateNull($value, $nameField)
     {
         if (is_null($value)) {
-            throw new ParamsFormatException("\"{$nameField}\" can't be null.");
+            throw new ParamsFormatException("\"{$nameField}\" can't be null.", 422);
         }
     }
 
     protected function validateString($value, $nameField)
     {
         if (!is_string($value)) {
-            throw new ParamsFormatException("\"{$nameField}\" must be a string value.");
+            throw new ParamsFormatException("\"{$nameField}\" must be a string value.", 422);
         }
     }
 
     protected function validateInteger($value, $nameField)
     {
         if (!is_int($value)) {
-            throw new ParamsFormatException("\"{$nameField}\" must be an integer value.");
+            throw new ParamsFormatException("\"{$nameField}\" must be an integer value.", 422);
         }
     }
 
     protected function validateFloat($value, $nameField)
     {
         if (!is_numeric($value)) {
-            throw new ParamsFormatException("\"{$nameField}\" must be an float value.");
+            throw new ParamsFormatException("\"{$nameField}\" must be an float value.", 422);
         }
     }
 
     protected function validateBoolean($value, $nameField)
     {
         if (!is_bool($value)) {
-            throw new ParamsFormatException("{$nameField} must be a bool");
+            throw new ParamsFormatException("{$nameField} must be a bool", 422);
         }
     }
 
@@ -255,7 +307,7 @@ class ParamsValidation
         $timeConverted = strtotime($time);
     
         if ($timeConverted === false && date($formato, $timeConverted) !== $time) {
-            new ParamsFormatException("{$name} must has HH:MM:SS");
+            new ParamsFormatException("{$name} must has HH:MM:SS", 422);
         }
     }
 
@@ -264,12 +316,12 @@ class ParamsValidation
         if (!is_array($array)
             || count($array) !== $size
         ) {
-            throw new ParamsFormatException("\"{$nameField}\" must be an array with {$size} positions");
+            throw new ParamsFormatException("\"{$nameField}\" must be an array with {$size} positions", 422);
         }
 
         foreach($array as $item) {
             if (!is_bool($item)) {
-                throw new ParamsFormatException("\"{$nameField}\" must be an array of booleans");
+                throw new ParamsFormatException("\"{$nameField}\" must be an array of booleans", 422);
             }
         }
     }
@@ -279,12 +331,12 @@ class ParamsValidation
         if (!is_array($array)
             || count($array) !== $size
         ) {
-            throw new ParamsFormatException("\"{$nameField}\" must be an array with {$size} positions");
+            throw new ParamsFormatException("\"{$nameField}\" must be an array with {$size} positions", 422);
         }
 
         foreach($array as $item) {
             if (!is_int($item)) {
-                throw new ParamsFormatException("\"{$nameField}\" must be an array of integer");
+                throw new ParamsFormatException("\"{$nameField}\" must be an array of integer", 422);
             }
         }
     }
@@ -292,12 +344,12 @@ class ParamsValidation
     protected function validateIntegerArrayWithoutSize($arrayInteger, $nameField)
     {
         if (!is_array($arrayInteger)) {
-            throw new ParamsFormatException("\"{$nameField}\" must be an array");
+            throw new ParamsFormatException("\"{$nameField}\" must be an array", 422);
         }
 
         foreach($arrayInteger as $item) {
             if (!is_int($item)) {
-                throw new ParamsFormatException("\"{$nameField}\" must be an array of integer");
+                throw new ParamsFormatException("\"{$nameField}\" must be an array of integer", 422);
             }
         }
     }
