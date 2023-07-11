@@ -59,6 +59,7 @@
 
         return {
             async save(evt) {
+                evt.preventDefault();
                 let response = await fetch("{{ route('bot.accounts.update.settings', $account) }}",{
                     method: 'PUT',
                     cache: "no-cache",
