@@ -99,8 +99,8 @@
                 valueForAll: 100,
                 minOrMax: 1
             },
-            missionsNames: {!! json_encode($missionsNames) !!},
-            params: {!! json_encode($account->params) !!},
+            missionsNames: {{ Js::from($missionsNames) }},
+            params: {{ Js::from($account->params) }},
         }
     }
 </script>
