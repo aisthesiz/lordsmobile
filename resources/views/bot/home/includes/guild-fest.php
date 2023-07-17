@@ -139,8 +139,8 @@
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <table class="table">
+            <div class="row mt-4 table-responsive">
+                <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Nome da Missão</th>
