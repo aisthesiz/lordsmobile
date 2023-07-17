@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('bot.index') }}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('bot.index') }}">Accounts</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('bot.index') }}">Contas</a></li>
         </ol>
       </nav>
 </div>
@@ -31,29 +31,36 @@
         <table class="table">
             <thead>
             <tr>
-                <th style="width: 100px">#</th>
-                <th style="width: 30px">{{ __('Name') }}</th>
-                <th style="width: 30px">{{ __('Ativa') }}</th>
-                <th style="width: 100px">{{ __('Data Inicio') }}</th>
-                <th style="width: 100px">{{ __('Dt Final') }}</th>
-                <th style="width:120px">{{ __('Actions') }}</th>
+                <th style="width: 30px">No.</th>
+                <th style="width: 30px">Nome</th>
+                <th style="width: 30px">Ativa</th>
+                <th style="width: 100px">Inicio</th>
+                <th style="width: 100px">Final</th>
+                <th style="width:120px">Ações</th>
             </tr>
             </thead>
             <tbody>
             @foreach($accounts as $item)
                 <tr>
-                    <td>{{ $item->lord_account_id }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td><a href="{{ route('bot.accounts.show', $item->id) }}">{{ $item->name }}</a></td>
+                    {{-- <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td> --}}
+                    <td>
+                        @if($item->is_active === true)
+                            🟢
+                        @else
+                            🔴
+                        @endif
+                    </td>
                     <td>{{ $item->time_start?->format('d/m/Y') ?? '-' }}</td>
                     <td>{{ $item->time_end?->format('d/m/Y') ?? '-' }}</td>
                     <td>
-                        <form class="form-inline" action="{{ route('admin.accounts.destroy', $item->id) }}" method="post">
-                            @csrf
-                            @method('delete')
+                        {{-- <form class="form-inline" action="{{ route('admin.accounts.destroy', $item->id) }}" method="post"> --}}
+                            {{-- @csrf --}}
+                            {{-- @method('delete') --}}
                             <a href="{{ route('bot.accounts.show', $item->id) }}" class="btn text-green border mx-1"><i class="fa fa-eye"></i></a>
-                            <button type="submit" class="btn text-red border"><i class="fa fa-times"></i></button>
-                        </form>
+                            {{-- <button type="submit" class="btn text-red border"><i class="fa fa-times"></i></button> --}}
+                        {{-- </form> --}}
                     </td>
                 </tr>
             @endforeach

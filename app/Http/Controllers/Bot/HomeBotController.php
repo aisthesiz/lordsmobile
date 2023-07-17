@@ -15,7 +15,7 @@ class HomeBotController extends Controller
 {
     public function index()
     {
-        $accounts = Account::where('is_active', '1')->where('user_id', auth()->user()->id)->paginate();
+        $accounts = Account::where('user_id', auth()->user()->id)->paginate();
         return view(
             view: 'bot.home.pages.index',
             data: compact('accounts'),
