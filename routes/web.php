@@ -19,8 +19,8 @@ Route::get('accounts-sales', [AccountSellWebController::class, 'index'])->name('
 Route::get('events', [EventWebController::class, 'index'])->name('web.events.index');
 
 Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('login');
+    return view('welcome');
+    // return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
