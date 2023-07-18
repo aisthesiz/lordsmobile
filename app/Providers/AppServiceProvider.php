@@ -7,6 +7,7 @@ use Core\Domain\Repository\AccountSellRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('money', function($amount) {
             return "<?php echo 'R$ ' . number_format($amount, 2, ',', ''); ?>";
         });
+
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
