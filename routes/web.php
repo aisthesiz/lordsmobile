@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\{
     RoleAdminController,
     UserAdminController,
 };
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Bot\HomeBotController;
 use App\Http\Controllers\Web\AccountSellWebController;
 use App\Http\Controllers\Web\EventWebController;
@@ -18,10 +19,7 @@ use App\Http\Controllers\Web\EventWebController;
 Route::get('accounts-sales', [AccountSellWebController::class, 'index'])->name('web.accounts-sales.idnex');
 Route::get('events', [EventWebController::class, 'index'])->name('web.events.index');
 
-Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('login');
-});
+Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
