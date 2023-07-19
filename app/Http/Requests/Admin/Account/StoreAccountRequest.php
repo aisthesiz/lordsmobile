@@ -27,7 +27,6 @@ class StoreAccountRequest extends FormRequest
         return [
             "name"            => "required|min:3|max:255",
             "lord_account_id" => "required|integer|unique:accounts,lord_account_id",
-            "user_id"         => "required|exists:users,id",
             "time_start"      => "required|date_format:Y/m/d H:i",
             "time_end"        => "required|date_format:Y/m/d H:i",
         ];

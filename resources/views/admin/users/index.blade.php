@@ -23,8 +23,8 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th style="width: 50%">{{ __('Name') }}</th>
-                    <th>Email</th>
+                    <th style="width: 300px">{{ __('Name') }}</th>
+                    <th style="width: 40%">Email</th>
                     <th style="width:120px">{{ __('Actions') }}</th>
                 </tr>
                 </thead>
@@ -42,6 +42,8 @@
                                 <div class="form-group clearfix">
                                     <a class="btn text-blue" href="{{ route('admin.users.edit', $user->id) }}"><i
                                             class="fas fa-edit"></i></a>
+                                    <a class="btn text-blue" href="{{ route('admin.user.accounts.index', $user) }}"><i
+                                            class="fas fa-file-invoice"></i></a>
                                     <button type="submit" class="btn text-red"
                                             href="{{ route('admin.users.edit', $user->id) }}"><i
                                             class="fas fa-user-times"></i></button>

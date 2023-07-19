@@ -324,12 +324,6 @@ return [
             'can'  => 'user.admin',
         ],
         [
-            'text' => 'Contas LordMobile',
-            'route' => 'admin.accounts.index',
-            'icon' => 'fas fa-toilet',
-            'can'  => 'role.admin',
-        ],
-        [
             'text' => 'Contas a Venda',
             'route' => 'admin.accounts-sales.index',
             'icon' => 'fas fa-toilet',

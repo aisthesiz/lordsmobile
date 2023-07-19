@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     HomeAdminController,
     PermissionAdminController,
     RoleAdminController,
+    UserAccountAdminController,
     UserAdminController,
 };
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -39,9 +40,15 @@ Route::middleware(['auth', 'auth.admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('users', UserAdminController::class);
 
-    Route::resource('accounts', AccountAdminController::class);
-    Route::put('accounts/{account}/update-settings', [AccountAdminController::class, 'updateSettings'])
-        ->name('accounts.update.settings');
+    Route::name('user.')->group(function() {
+        Route::resource('users/{user}/accounts', UserAccountAdminController::class);
+        Route::put('users/{user}/accounts/{account}/update-settings', [UserAccountAdminController::class, 'updateSettings'])
+            ->name('accounts.update.settings');
+    });
+
+    // Route::resource('accounts', AccountAdminController::class);
+    // Route::put('accounts/{account}/update-settings', [AccountAdminController::class, 'updateSettings'])
+    //     ->name('accounts.update.settings');
 
     Route::DELETE('accounts-sales/image-remove/{id}/{image}', [AccountSellController::class, 'deleteImage'])
         ->name('accounts-sales.delete.image');

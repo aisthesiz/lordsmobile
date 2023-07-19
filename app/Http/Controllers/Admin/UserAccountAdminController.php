@@ -7,13 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Repository\AccountRepositoryEloquent;
 use Core\Domain\Entity\Account as AccountEntity;
 use App\Http\Requests\Admin\Account\{StoreAccountRequest, UpdateAccountRequest};
-use App\Models\{User, Account as AccountModel};
+use App\Models\{User, Account as AccountModel, GFMissionName};
 use Carbon\Carbon;
+use Core\Domain\Exception\NotFoundException;
 use Core\Domain\ValueObject\Uuid;
 use Illuminate\Http\Request;
 use Throwable;
 
-class AccountAdminController extends Controller
+class UserAccountAdminController extends Controller
 {
     
     public function __construct(
@@ -21,30 +22,33 @@ class AccountAdminController extends Controller
         protected User $userRepository,
     ) {}
 
-    public function index()
+    public function index(User $user)
     {
-        $accounts = $this->repository->paginate();
+        // $accounts = $this->repository->paginate();
+        $accounts = $user->accounts()->paginate();
+
         return view(
-            view: 'admin.accounts.pages.index',
-            data: compact('accounts'),
+            view: 'admin.users-accounts.pages.index',
+            data: compact('accounts', 'user'),
         );
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(User $user)
     {
-        $users = $this->userRepository->all();
+        // $users = $this->userRepository->all();
         return view(
-            view: 'admin.accounts.pages.create',
-            data: compact('users'),
+            view: 'admin.users-accounts.pages.create',
+            data: compact('user'),
         );
     }
 
-    public function store(StoreAccountRequest $request)
+    public function store(StoreAccountRequest $request, User $user)
     {
         $data = $request->all();
+        $data['user_id'] = $user->id;
         $repository = new AccountRepositoryEloquent(new AccountModel());
 
         try {
@@ -73,9 +77,10 @@ class AccountAdminController extends Controller
             $repository->insert($entity);
 
             return redirect()
-                ->route('admin.user.accounts.index')
+                ->route('admin.user.accounts.index', $user)
                 ->with('success', "Conta {$entity->name} foi criada");
         } catch (Throwable $th) {
+
             return redirect()
                 ->back()
                 ->withInput($request->all())
@@ -83,46 +88,71 @@ class AccountAdminController extends Controller
         }
     }
 
-    public function show(AccountModel $account)
+    public function show(User $user, AccountModel $account)
     {
-        // $settings = !empty($account->params) ? json_decode($account->params) : null;
-        // $settings = json_encode($account->params);
+        $missionsNamesRaw = GFMissionName::all();
+        $missionsNames = [];
+        foreach ($missionsNamesRaw as $item) {
+            $missionsNames[$item->id] = $item->name;
+        }
+        if ($user->id != $account->user_id) {
+            return redirect()->back()->withErrors(['not_founded' => 'Counta não encontrada']);
+        }
         return view(
-            view: 'admin.accounts.pages.show',
-            data: compact('account'),
+            view: 'admin.users-accounts.pages.show',
+            data: compact('account', 'user', 'missionsNames'),
         );
     }
 
     /**
      * Display the specified resource.
      */
-    public function updateSettings(AccountModel $account, Request $request)
+    public function updateSettings(User $user, AccountModel $account, Request $request)
     {
-        $data = $request->all();
-        $account->params = json_decode($data['params']);
-        $account->params_updated_at = now();
-        $account->save();
-        return redirect()->back()->with('success', 'Configuracoes salvas com sucesso');
+        try {
+            if ($account->user_id != $user->id) {
+                throw new NotFoundException('Conta não encontrada (403)', 404);
+            }
+            $params = json_decode($request->getContent());
+    
+            $entity = AccountEntityBuilder::createFromAccountModel($account);
+            $entity->updateParams($params);
+    
+            $resitory = new AccountRepositoryEloquent($account);
+            $resitory->update($entity);
+    
+            return response()->json(['message' => 'Atualizado com sucesso'])->setStatusCode(200);
+        } catch (Throwable $th) {
+            $code = $th->getCode();
+            if (empty($code)) {
+                $code = 500;
+            }
+            return response()->json(['message' => $th->getMessage()])->setStatusCode($code)->withException($th);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AccountModel $account)
+    public function edit(User $user, AccountModel $account)
     {
-        $users = $this->userRepository->select(['id', 'name'])->get();
-        return view('admin.accounts.pages.edit', compact('account', 'users'));
+        if ($user->id != $account->user_id) {
+            return redirect()->back()->withErrors(['not_founded' => 'Counta não encontrada']);
+        }
+        // $users = $this->userRepository->select(['id', 'name'])->get();
+        return view('admin.users-accounts.pages.edit', compact('account', 'user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAccountRequest $request, AccountModel $account)
+    public function update(UpdateAccountRequest $request, User $user, AccountModel $account)
     {
+        if ($user->id != $account->user_id) {
+            return redirect()->back()->withErrors(['not_founded' => 'Counta não encontrada']);
+        }
         $repository = new AccountRepositoryEloquent(new AccountModel());
-
         $entity = AccountEntityBuilder::createFromAccountModel($account);
-
         $dataInput = $request->all();
 
         try {
@@ -131,30 +161,35 @@ class AccountAdminController extends Controller
     
             $entity->update(
                 name:          $dataInput['name'],
-                userId:        $dataInput['user_id'],
+                userId:        $user->id,
                 lordAccountId: $dataInput['lord_account_id'],
                 timeStart:     $dataInput['time_start'],
                 timeEnd:       $dataInput['time_end'],
             );
-    
+
             $repository->update($entity);
     
             return redirect()
-                ->route('admin.user.accounts.index')
+                ->route('admin.user.accounts.index', $user)
                 ->with(['success' => 'Conta Editada com sucesso']);
         } catch (Throwable $th) {
+            dd($th);
             return redirect()
                 ->back()
                 ->withInput($request->all())
-                ->withErrors(['error' => $th->getMessage()]);
+                ->withErrors('error', $th->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AccountModel $account)
+    public function destroy(User $user, AccountModel $account)
     {
-        //
+        if ($user->id != $account->user_id) {
+            return redirect()->back()->withErrors(['not_founded' => 'Counta não encontrada']);
+        }
+        $account->delete();
+        return back()->with(['success' => 'Conta Excluida com sucesso!']);
     }
 }
