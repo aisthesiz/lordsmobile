@@ -5,7 +5,10 @@
         <div class="form-group-sm">
             <label for="params.supplySettings.playerToSend" class="font-weight-light">Enviar para:</label>
             <input type="text" class="form-control-sm" id="params.supplySettings.playerToSend"
-                x-model.number="params.supplySettings.playerToSend">
+                x-model.number="params.supplySettings.playerToSend"
+                @input="params.supplySettings.playerToSend = $event.target.value"
+                @blur="params.supplySettings.playerToSend = params.supplySettings.playerToSend || ''"
+                >
         </div>
     </div>
 
