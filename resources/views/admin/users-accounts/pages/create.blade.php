@@ -3,7 +3,7 @@
 @section('title',"Contas Lord Mobile")
 
 @section('content_header')
-    <h1>{{ __('Create a new') }} Contas Lord Mobile</h1>
+    <h1>Criar uma conta para {{ $user->name }}</h1>
 @stop
 
 @section('content')
