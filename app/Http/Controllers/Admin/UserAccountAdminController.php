@@ -57,7 +57,7 @@ class UserAccountAdminController extends Controller
             $data['is_active']  = $data['is_active'] == '1' ? true : false;
 
             $params = json_decode(file_get_contents(storage_path('configs/settings.json')));
-    ;
+
             $entity = new AccountEntity(
                 userId:        $data['user_id'],
                 lordAccountId: $data['lord_account_id'],
