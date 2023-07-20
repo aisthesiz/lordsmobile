@@ -72,8 +72,8 @@ class UserAccountAdminControllerTest extends TestCase
     public function test_store_with_valid_params() {
 
         $total = 10;
-        $current = random_int(0, 9);
-        $users = User::factory()->count(10)->create();
+        $current = random_int(0, $total - 1);
+        $users = User::factory()->count($total)->create();
         $dateIni = now()->subDays(10);
         $dateEnd = now()->addMonths(4);
 
