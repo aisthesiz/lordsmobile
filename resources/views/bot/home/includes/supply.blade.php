@@ -2,7 +2,11 @@
 <div class="card-body">
 
     <div class="row">
-        
+        <div class="form-group-sm">
+            <label for="params.supplySettings.playerToSend" class="font-weight-light">Enviar para:</label>
+            <input type="text" class="form-control-sm" id="params.supplySettings.playerToSend"
+                x-model.number="params.supplySettings.playerToSend">
+        </div>
     </div>
 
     <div class="row">
