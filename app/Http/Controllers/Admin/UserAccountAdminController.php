@@ -157,7 +157,7 @@ class UserAccountAdminController extends Controller
 
         try {
             $dataInput['time_start'] = new Carbon($dataInput['time_start']);
-            $dataInput['time_end'] = new Carbon($dataInput['time_end']);
+            $dataInput['time_end']   = new Carbon($dataInput['time_end']);
     
             $entity->update(
                 name:          $dataInput['name'],
@@ -167,13 +167,28 @@ class UserAccountAdminController extends Controller
                 timeEnd:       $dataInput['time_end'],
             );
 
+            if (!$entity->canActivate() && $dataInput['is_active']) {
+                return redirect()
+                    ->back()
+                    ->withInput($request->all())
+                    ->withErrors([
+                        'is_active' => 'A Conta não pode ser ativa porque a data final é menor que hoje.',
+                        'time_end' =>  'A Conta não pode ser ativa porque a data final é menor que hoje.',
+                    ]);
+            }
+
+            if ($entity->canActivate() && $dataInput['is_active']) {
+                $entity->activate();
+            } else {
+                $entity->deactivate();
+            }
+
             $repository->update($entity);
     
             return redirect()
                 ->route('admin.user.accounts.index', $user)
                 ->with(['success' => 'Conta Editada com sucesso']);
         } catch (Throwable $th) {
-            dd($th);
             return redirect()
                 ->back()
                 ->withInput($request->all())

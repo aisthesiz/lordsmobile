@@ -25,28 +25,42 @@ class AccountTest extends AccountBase
         $this->assertInstanceOf(Account::class, $account);
     }
 
-    public function test_verify_if_valid_when_time_end_is_past(): void
+    public function test_verify_if_activete_when_time_end_is_past(): void
     {
-        $this->expectExceptionMessage('timeEnd is past');
-        new Account(
+        $account = new Account(
             userId:        100,
             lordAccountId: 3123123123,
             params:        $this->makeParams(),
             timeStart:     now()->subDays(2),
             timeEnd:       now()->subDay(),
         );
+
+        $this->assertFalse($account->isActivate());
     }
 
-    public function test_verify_if_valid_when_time_start_is_tomorrow(): void
+    public function test_verify_if_activete_when_time_start_is_tomorrow(): void
     {
-        $this->expectExceptionMessage('timeStart is future');
-        new Account(
+        $account = new Account(
             userId:        100,
             lordAccountId: 3123123123,
             params:        $this->makeParams(),
             timeStart:     now()->addDay(),
             timeEnd:       now()->addDay(),
         );
+        $this->assertFalse($account->isActivate());
+    }
+
+    public function test_verify_if_activete_when_is_active_if_false(): void
+    {
+        $account = new Account(
+            userId:        100,
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subDays(10),
+            timeEnd:       now()->addDays(10),
+            isActive:      false,
+        );
+        $this->assertFalse($account->isActivate());
     }
 
     public function test_verify_if_valid_when_time_end_id_null(): void
@@ -157,5 +171,77 @@ class AccountTest extends AccountBase
         $this->assertEquals(101, $account->userId);
         $this->assertEquals(now()->subHours(4)->format('Y-m-d H:i'), $account->timeStart->format('Y-m-d H:i'));
         $this->assertEquals(now()->addDays(5)->format('Y-m-d H:i'), $account->timeEnd->format('Y-m-d H:i'));
+    }
+
+    public function test_update_when_is_active_and_time_end_is_past()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subDay(),
+            timeEnd:       now()->addDays(10),
+            isActive:      true,
+        );
+
+        $account->update(
+            name:          "Updated",
+            userId:        101,
+            lordAccountId: 11111111111111,
+            timeStart:     now()->subHours(4),
+            timeEnd:       now()->subDay(),
+        );
+
+        $this->assertEquals('Updated', $account->name);
+        $this->assertEquals(101, $account->userId);
+        $this->assertEquals(now()->subHours(4)->format('Y-m-d H:i'), $account->timeStart->format('Y-m-d H:i'));
+        $this->assertEquals(now()->subDay()->format('Y-m-d H:i'), $account->timeEnd->format('Y-m-d H:i'));
+        $this->assertFalse($account->isActivate());
+    }
+
+    public function test_can_activate_false()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subMonths(5),
+            timeEnd:       now()->subDay(),
+            isActive:      false,
+        );
+
+        $this->assertFalse($account->canActivate());
+    }
+
+    public function test_can_activate()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subMonths(5),
+            timeEnd:       now()->addDays(10),
+            isActive:      false,
+        );
+
+        $this->assertTrue($account->canActivate());
+    }
+
+
+    public function test_can_activate_time_end_is_null()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subMonths(5),
+            isActive:      false,
+        );
+
+        $this->assertTrue($account->canActivate());
     }
 }

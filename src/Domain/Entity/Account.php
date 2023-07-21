@@ -41,6 +41,14 @@ class Account
         $timeStart = new Carbon($this->timeStart);
         $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
 
+        $this->validateParams();
+    }
+
+    public function validateTimeAndParamsToUser(): void
+    {
+        $timeStart = new Carbon($this->timeStart);
+        $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
+
         if ($timeStart->gt(now())) {
             throw new EntityValidationException('timeStart is future', 422);
         }
@@ -70,17 +78,17 @@ class Account
         $timeStart = new Carbon($this->timeStart);
         $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
 
-        if ($timeStart->gt(now())) {
-            return false;
-        }
+        // if ($timeStart->gt(now())) {
+        //     return false;
+        // }
 
-        if (!empty($timeEnd) && $timeEnd->lt(now())) {
-            return false;
-        }
+        // if (!empty($timeEnd) && $timeEnd->lt(now())) {
+        //     return false;
+        // }
 
-        if (!$this->isActive) {
-            return false;
-        }
+        // if (!$this->isActive) {
+        //     return false;
+        // }
 
         return true;
     }
@@ -114,5 +122,33 @@ class Account
     {
         $validateParams = new ParamsValidation();
         $validateParams->validation($this->params);
+    }
+
+    public function isActivate()
+    {
+        $timeStart = new Carbon($this->timeStart);
+        $timeEnd   = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
+
+        if ($timeStart->gt(now())) {
+            return false;
+        }
+
+        if (!empty($timeEnd) && $timeEnd->lt(now())) {
+            return false;
+        }
+
+        if (!$this->isActive) {
+            return false;
+        }
+        return true;
+    }
+
+    public function canActivate(): bool
+    {
+        $timeEnd = !empty($this->timeEnd) ? new Carbon($this->timeEnd) : null;
+        if (!empty($timeEnd) && $timeEnd->lt(now())) {
+            return false;
+        }
+        return true;
     }
 }

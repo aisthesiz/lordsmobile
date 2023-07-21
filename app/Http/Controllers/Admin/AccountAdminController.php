@@ -136,6 +136,10 @@ class AccountAdminController extends Controller
                 timeStart:     $dataInput['time_start'],
                 timeEnd:       $dataInput['time_end'],
             );
+
+            if ($entity->isValid() && $dataInput['is_active'] == "1") {
+                $entity->activate();
+            }
     
             $repository->update($entity);
     

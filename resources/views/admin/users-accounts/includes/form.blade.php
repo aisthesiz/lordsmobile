@@ -17,7 +17,8 @@
 </div>
 
 <div class="row">
-    Usuário: {{ $user->name }}
+    {{-- Usuário: {{ $user->name }} --}}
+    @error('user_id') PROBLEMA COM USUARIO @enderror
 </div>
 
 <div class="row">
@@ -28,6 +29,7 @@
         required
         autocomplete="off"
         value="{{ old('time_start', isset($account) ? $account->time_start->format('Y/m/d H:i') : now()->format('Y/m/d ') . '00:00') }}"
+        fgroup-class="col-md-12"
     ></x-adminlte-input-date>
 </div>
 
@@ -39,6 +41,7 @@
         required
         autocomplete="off"
         value="{{ old('time_end', isset($account) ? $account->time_end->format('Y/m/d H:i') : now()->addMonth()->format('Y/m/d ') . '00:00') }}"
+        fgroup-class="col-md-12"
     ></x-adminlte-input-date>
 </div>
 
@@ -54,5 +57,10 @@
             {{ old('is_active', $account->is_active ?? '') == '1' ? 'checked="checked"' : '' }}>
         <label for="is_active" class="custom-control-label">Ativa</label>
     </div>
+    @if($errors->has('is_active'))
+        <span class="invalid-feedback d-block" role="alert">
+            <strong>{{ $errors->first('is_active') }}</strong>
+        </span>
+    @endif
 </div>
 

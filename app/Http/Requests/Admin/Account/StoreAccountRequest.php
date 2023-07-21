@@ -28,7 +28,7 @@ class StoreAccountRequest extends FormRequest
             "name"            => "required|min:3|max:255",
             "lord_account_id" => "required|integer|unique:accounts,lord_account_id",
             "time_start"      => "required|date_format:Y/m/d H:i",
-            "time_end"        => "required|date_format:Y/m/d H:i",
+            "time_end"        => "required|date_format:Y/m/d H:i|after:tomorrow",
         ];
     }
 }
