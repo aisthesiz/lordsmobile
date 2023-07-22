@@ -70,9 +70,9 @@
                 </div>
                 <div class="col-sm-1">
                     <div class="custom-control custom-checkbox">
-                        <label for="params.rallySettings.levelToAttack[5]" class="custom-control-label font-weight-light">6</label>
                         <input class="custom-control-input" type="checkbox" id="params.rallySettings.levelToAttack[5]"
-                            x-model="params.rallySettings.levelToAttack[5]">
+                        x-model="params.rallySettings.levelToAttack[5]">
+                        <label for="params.rallySettings.levelToAttack[5]" class="custom-control-label font-weight-light">6</label>
                     </div>
                 </div>
             </div>
