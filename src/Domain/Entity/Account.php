@@ -109,6 +109,11 @@ class Account
         $this->validateTimeAndParams();
     }
 
+    public function changeOwnner(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
     public function updateParams(object $newParams): void
     {
         $validateParams = new ParamsValidation();

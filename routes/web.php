@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountSellController;
+use App\Http\Controllers\AccountTransferAdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,9 +51,16 @@ Route::middleware(['auth', 'auth.admin'])->prefix('admin')->name('admin.')->grou
     // Route::put('accounts/{account}/update-settings', [AccountAdminController::class, 'updateSettings'])
     //     ->name('accounts.update.settings');
 
-    Route::DELETE('accounts-sales/image-remove/{id}/{image}', [AccountSellController::class, 'deleteImage'])
+    Route::delete('accounts-sales/image-remove/{id}/{image}', [AccountSellController::class, 'deleteImage'])
         ->name('accounts-sales.delete.image');
     Route::resource('accounts-sales', AccountSellController::class)->except(['show']);
+
+    /**
+     * Accounts Transfer
+     */
+    Route::get('account-transfer', [AccountTransferAdminController::class, 'index'])->name('account-transfer.index');
+    Route::get('account-transfer/search-account', [AccountTransferAdminController::class, 'searchAccount'])->name('ajax.account-transfer.find');
+    Route::put('account-transfer/transfer', [AccountTransferAdminController::class, 'transferAccount'])->name('ajax.account-transfer.transfer');
 });
 
 Route::middleware(['auth'])->prefix('bot')->name('bot.')->group(function(){

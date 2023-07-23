@@ -324,6 +324,12 @@ return [
             'can'  => 'user.admin',
         ],
         [
+            'text' => 'Transferência de contas',
+            'route' => 'admin.account-transfer.index',
+            'icon' => 'fas fa-toilet',
+            'can'  => 'role.admin',
+        ],
+        [
             'text' => 'Contas a Venda',
             'route' => 'admin.accounts-sales.index',
             'icon' => 'fas fa-toilet',

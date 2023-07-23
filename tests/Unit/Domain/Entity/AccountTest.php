@@ -244,4 +244,21 @@ class AccountTest extends AccountBase
 
         $this->assertTrue($account->canActivate());
     }
+
+    public function test_change_ownner()
+    {
+        $account = new Account(
+            userId:        100,
+            name:          "Created",
+            lordAccountId: 3123123123,
+            params:        $this->makeParams(),
+            timeStart:     now()->subMonths(1),
+            timeEnd:       now()->addMonths(5),
+            isActive:      false,
+        );
+
+        $account->changeOwnner(101);
+
+        $this->assertEquals(101, $account->userId);
+    }
 }
