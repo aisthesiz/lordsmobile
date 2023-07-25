@@ -5,7 +5,6 @@
 @section('content_header')
     <h1>
         Contas Lord Mobile
-        <a href="{{ route('admin.accounts.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
     </h1>
 
 @stop
@@ -26,11 +25,10 @@
                 <thead>
                 <tr>
                     <th style="width: 100px">#</th>
-                    <th style="width: 100px">{{ __('User') }}</th>
-                    <th style="width: 30px">{{ __('Ativa') }}</th>
-                    <th style="width: 100px">{{ __('Dt Ativada') }}</th>
-                    <th style="width: 100px">{{ __('Dt Desativada') }}</th>
-                    <th style="width:120px">{{ __('Actions') }}</th>
+                    <th style="width: 100px">Usuário</th>
+                    <th style="width: 30px">Ativa</th>
+                    <th style="width: 100px">Dt Inicio</th>
+                    <th style="width: 100px">Dt Final</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,17 +37,8 @@
                         <td>{{ $item->lord_account_id }}</td>
                         <td>{{ $item->user->name }}</td>
                         <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
-                        <td>{{ $item->activated_at?->format('d/m/Y') ?? '-' }}</td>
-                        <td>{{ $item->deactivated_at?->format('d/m/Y') ?? '-' }}</td>
-                        <td>
-                            <form class="form-inline" action="{{ route('admin.accounts.destroy', $item->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <a href="{{ route('admin.accounts.edit', $item->id) }}" class="btn text-green border"><i class="fa fa-pen"></i></a>
-                                <a href="{{ route('admin.accounts.show', $item->id) }}" class="btn text-green border mx-1"><i class="fa fa-eye"></i></a>
-                                <button type="submit" class="btn text-red border"><i class="fa fa-times"></i></button>
-                            </form>
-                        </td>
+                        <td>{{ $item->time_start?->format('d/m/Y') ?? '-' }}</td>
+                        <td>{{ $item->time_end?->format('d/m/Y') ?? '-' }}</td>
                     </tr>
                 @endforeach
                 </tbody>
