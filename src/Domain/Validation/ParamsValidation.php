@@ -24,6 +24,33 @@ class ParamsValidation
         $this->validateArenaSettings($params->arenaSettings ?? null);
         $this->validateBuildSettings($params->buildSettings ?? null);
         $this->validateEventSettings($params->eventSettings);
+        $this->validateResearchSettings($params->researchSettings);
+    }
+
+    protected function validateResearchSettings($researchSettings)
+    {
+        if (is_null($researchSettings)) {
+            throw new ParamsFormatException("\"eventSettings\" cant be null", 422);
+        }
+
+        $this->validateBoolean($researchSettings->autoResearch, 'researchSettings->autoResearch');
+        $this->validateBoolean($researchSettings->useTargetTable, 'researchSettings->useTargetTable');
+        $this->validateBoolean($researchSettings->useTechnolabes, 'researchSettings->useTechnolabes');
+        $this->validateIsNull($researchSettings->researchPriority, 'researchSettings->researchPriority');
+        $this->validateIsNull($researchSettings->researchEnabled, 'researchSettings->researchEnabled');
+        
+        $this->validateInteger($researchSettings->minTechnoMight, 'researchSettings->minTechnoMight');
+
+        foreach($researchSettings->researchPriority_ as $key => $item) {
+            $this->validateInteger($item->Key, "researchSettings->researchPriority_[{$key}]->Key");
+            $this->validateBoolean($item->Enabled, "researchSettings->researchPriority_[{$key}]->Enabled");
+        }
+
+        foreach($researchSettings->techTarget as $key => $item) {
+            $this->validateInteger($item->TechID, "researchSettings->techTarget[{$key}]->TechID");
+            $this->validateInteger($item->TechLevel, "researchSettings->techTarget[{$key}]->TechLevel");
+        }
+
     }
 
     protected function validateEventSettings($eventSettings)
@@ -271,6 +298,13 @@ class ParamsValidation
     {
         if (is_null($value)) {
             throw new ParamsFormatException("\"{$nameField}\" can't be null.", 422);
+        }
+    }
+
+    public function validateIsNull($value, $nameField)
+    {
+        if (!is_null($value)) {
+            throw new ParamsFormatException("\"{$nameField}\" need be null we do not use this field.", 422);
         }
     }
 

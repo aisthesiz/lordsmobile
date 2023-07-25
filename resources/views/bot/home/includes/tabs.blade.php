@@ -11,6 +11,7 @@
             <li><a href="#tabs-6">Heroes</a></li>
             <li><a href="#tabs-7">Edfícios</a></li>
             <li><a href="#tabs-8">FG</a></li>
+            <li><a href="#tabs-9">Pesquisa</a></li>
         </ul>
         <div id="tabs-1">
             @include('bot.home.includes.general')
@@ -35,6 +36,9 @@
         </div>
         <div id="tabs-8">
             @include('bot.home.includes.guild-fest')
+        </div>
+        <div id="tabs-9">
+            @include('bot.home.includes.research')
         </div>
     </div>
 

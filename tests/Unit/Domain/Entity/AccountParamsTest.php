@@ -65,6 +65,24 @@ class AccountParamsTest extends AccountBase
         $this->assertTrue(true);
     }
 
+
+    public function test_instance_and_validate_params_estructure_when_params_is_research_settings_is_invalid()
+    {
+        $this->expectException(ParamsFormatException::class);
+        $params = $this->makeParams();
+        $params->researchSettings->useTechnolabes = 123;
+        $params->researchSettings->techTarget[4]->TechID = false;
+        $account = new Account(
+            userId:        100,
+            lordAccountId: 3123123123,
+            params:        $params,
+            timeStart:     now()->subDay(),
+            timeEnd:       now()->addDay(),
+        );
+        $account->validateParams();
+        $this->assertTrue(true);
+    }
+
     public function test_updated_params_date_when_new_params_is_invalid()
     {
         $params = $this->makeParams();
