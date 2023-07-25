@@ -67,7 +67,9 @@ Route::middleware(['auth'])->prefix('bot')->name('bot.')->group(function(){
     Route::get('/', [HomeBotController::class, 'index'])->name('index');
     Route::get('/accounts/{account}/show', [HomeBotController::class, 'show'])->name('accounts.show');
     Route::put('/accounts/{account}/update-settings', [HomeBotController::class, 'updateSettings'])
-    ->name('accounts.update.settings');
+        ->name('accounts.update.settings');
+    Route::get('profile', [HomeBotController::class, 'userProfile'])->name('profile');
+    Route::put('profile', [HomeBotController::class, 'userProfileUpdate']);
 });
 
 require __DIR__.'/auth.php';

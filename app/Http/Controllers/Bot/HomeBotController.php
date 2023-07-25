@@ -4,15 +4,26 @@ namespace App\Http\Controllers\Bot;
 
 use App\Builder\AccountEntityBuilder;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Bot\Profile\UpdateProfileRequest;
 use App\Models\Account;
 use App\Models\GFMissionName;
 use App\Repository\AccountRepositoryEloquent;
 use Core\Domain\Exception\NotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\{Hash, Auth};
 use Throwable;
 
 class HomeBotController extends Controller
 {
+
+    public function __construct()
+    {
+        config([
+            'adminlte.layout_topnav' => true,
+            'adminlte.classes_topnav_nav' => 'navbar-expand-md',
+            'adminlte.dashboard_url' => 'bot',
+        ]);
+    }
     public function index()
     {
         $accounts = Account::where('user_id', auth()->user()->id)->paginate();
@@ -69,5 +80,29 @@ class HomeBotController extends Controller
             }
             return response()->json(['message' => $th->getMessage()])->setStatusCode($code)->withException($th);
         }
+    }
+
+    public function userProfile()
+    {
+        $user = auth()->user();
+        return view('bot.profile.pages.index', compact('user'));
+    }
+
+    public function userProfileUpdate(UpdateProfileRequest $request)
+    {
+        $data = $request->all();
+        $user = auth()->user();
+    
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->cellphone = $data['cellphone'];
+
+        if(!empty($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Perfil editado com sucesso.');
     }
 }
