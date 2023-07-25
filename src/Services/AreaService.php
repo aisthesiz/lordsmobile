@@ -3,7 +3,7 @@ namespace Core\Services;
 
 class AreaService
 {
-    public static function getArea(): string
+    public static function getArea(): string | null
     {
         return request()->segment(1);
     }
