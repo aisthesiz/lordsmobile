@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Core\Services\AreaService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -52,5 +54,23 @@ class User extends Authenticatable
     public function accounts(): HasMany
     {
         return $this->hasMany(Account::class);
+    }
+
+    public function adminlte_image()
+    {
+        return url('assets/images/user_icon.svg');
+    }
+
+    public function adminlte_desc()
+    {
+        return $this->cellphone;
+    }
+
+    public function adminlte_profile_url()
+    {
+        if (AreaService::isAdmin()) {
+            return route('admin.users.edit', auth()->user());
+        }
+        return route('bot.profile');
     }
 }
