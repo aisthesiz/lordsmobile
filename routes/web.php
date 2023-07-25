@@ -47,7 +47,7 @@ Route::middleware(['auth', 'auth.admin'])->prefix('admin')->name('admin.')->grou
             ->name('accounts.update.settings');
     });
 
-    // Route::resource('accounts', AccountAdminController::class);
+    Route::resource('accounts', AccountAdminController::class)->only('index');
     // Route::put('accounts/{account}/update-settings', [AccountAdminController::class, 'updateSettings'])
     //     ->name('accounts.update.settings');
 
