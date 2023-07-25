@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 // use App\Http\Requests\Admin\Account\{StoreAccountRequest, UpdateAccountRequest};
 use App\Models\{User, Account as AccountModel};
 use App\Repository\AccountRepositoryEloquent;
-
+use Carbon\Carbon;
 // use Carbon\Carbon;
 // use Core\Domain\ValueObject\Uuid;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 // use Throwable;
 
 class AccountAdminController extends Controller
@@ -23,9 +23,15 @@ class AccountAdminController extends Controller
         protected User $userRepository,
     ) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $accounts = $this->repository->paginate();
+        $query = $this->repository->query();
+        $timeEnd = $request->get('time_end');
+        if (!empty($timeEnd)) {
+            $timeEnd = Carbon::createFromFormat('Y-m-d', $timeEnd);
+            $query = $query->where('time_end', '<', $timeEnd->format('Y-m-d 23:59:59'));
+        }
+        $accounts = $query->paginate();
         return view(
             view: 'admin.accounts.pages.index',
             data: compact('accounts'),

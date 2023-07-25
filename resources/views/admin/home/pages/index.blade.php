@@ -12,6 +12,6 @@
         theme="teal" url="{{ route('admin.users.index') }}" url-text="Usuarios"/>
 
     <x-adminlte-small-box title="{{ $totalAccountsWillInactiveIn15DaysOrLess }}" text="Contas que faltam 15 dias para vencer" icon="fas fa-user text-dark"
-        theme="warning" url="{{ route('admin.accounts.index') }}" url-text="Contas que faltam 15 dias para vencer"/>
+        theme="warning" url="{{ route('admin.accounts.index') }}?time_end={{ now()->addDays(15)->format('Y-m-d') }}" url-text="Contas que faltam 15 dias para vencer"/>
 
 @stop

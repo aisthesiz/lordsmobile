@@ -27,6 +27,7 @@
                     <th style="width: 100px">#</th>
                     <th style="width: 100px">Usuário</th>
                     <th style="width: 30px">Ativa</th>
+                    <th style="width: 10px">Status</th>
                     <th style="width: 100px">Dt Inicio</th>
                     <th style="width: 100px">Dt Final</th>
                 </tr>
@@ -37,6 +38,15 @@
                         <td>{{ $item->lord_account_id }}</td>
                         <td>{{ $item->user->name }}</td>
                         <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
+                        <td class="">
+                            @if ($item->time_end->lt(now()))
+                                🔴
+                            @elseif($item->time_end->lt(now()->addDays(15)))
+                                🟠
+                            @else
+                                🟢
+                            @endif
+                        </td>
                         <td>{{ $item->time_start?->format('d/m/Y') ?? '-' }}</td>
                         <td>{{ $item->time_end?->format('d/m/Y') ?? '-' }}</td>
                     </tr>
