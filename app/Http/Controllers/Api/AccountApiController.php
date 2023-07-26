@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Builder\AccountEntityBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use Illuminate\Http\Request;
@@ -21,10 +22,22 @@ class AccountApiController extends Controller
         return response()->json($result, 200);
     }
 
-
-    public function getById(Account $account)
+    public function get(Request $request, int $igg)
     {
-        return response()->json($account->params, 200);
+        if (!$account = Account::where('lord_account_id', $igg)->first()) {
+            return response()->json(['message' => 'Conta não encontrada'])->setStatusCode(404);
+        }
+    }
+
+    public function getById(Request $request, int $igg)
+    {
+        if (!$accountDb = Account::where('lord_account_id', $igg)->first()) {
+            return response()->json(['message' => 'Conta não encontrada'])->setStatusCode(404);
+        }
+
+        $account = AccountEntityBuilder::createFromAccountModel($accountDb);
+
+        return response()->json($account->params)->setStatusCode(200);
     }
 
     protected function prepareParamsToResponse($params)

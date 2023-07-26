@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::middleware('auth:sanctum')->name('api.')->group(function() {
 Route::middleware(['auth:sanctum', 'role:api','permission:read api'])->name('api.')->group(function() {
     Route::get('/accounts', [AccountApiController::class, 'index'])->name('accounts.index');
-    Route::get('/accounts/{account}', [AccountApiController::class, 'getById'])->name('accounts.get-by-id');
+    Route::get('/accounts/{igg}', [AccountApiController::class, 'getById'])->name('accounts.get-by-id');
 });
 
 
