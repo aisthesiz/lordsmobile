@@ -31,7 +31,7 @@
             Prioridade na construção:
         </div>
         <div class="col-sm-3">
-            <select class="col-sm-8 w-10" x-model="params.buildSettings.buildPriority">
+            <select class="col-sm-8 w-10" x-model.number="params.buildSettings.buildPriority">
                 <option value="0">Castelo</option>
                 <option value="1">Recurso</option>
                 <option value="2">Academia</option>
