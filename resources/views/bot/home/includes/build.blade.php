@@ -35,7 +35,7 @@
                 <option value="0">Castelo</option>
                 <option value="1">Recurso</option>
                 <option value="2">Academia</option>
-                <option value="3">Casar~ao</option>
+                <option value="3">Casarão</option>
                 <option value="4">Quartel/Enfermaria</option>
                 <option value="5">Casa de Monstros</option>
                 <option value="6">Familiares</option>
