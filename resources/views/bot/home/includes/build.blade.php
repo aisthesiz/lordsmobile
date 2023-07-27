@@ -49,7 +49,7 @@
         </div>
         <div class="col-sm-5">
             <div class="form-group-inline-sm">
-                <label for="params.buildSettings.maxBuildLevel" class="font-weight-light">Nivel max da construcao</label>
+                <label for="params.buildSettings.maxBuildLevel" class="font-weight-light">Nivel max da construção</label>
                 <input type="number" step="1" class="sm" id="params.buildSettings.maxBuildLevel"
                     x-model.number="params.buildSettings.maxBuildLevel">
             </div>
