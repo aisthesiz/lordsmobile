@@ -29,7 +29,7 @@ class AccountFactory extends Factory
             'is_active' => fake()->boolean(),
             'params_updated_at' => now(),
             'params_readed_at' => now(),
-            'time_start' => now(),
+            'time_start' => now()->subDay(),
             'time_end' => now()->addMonth(),
         ];
     }
