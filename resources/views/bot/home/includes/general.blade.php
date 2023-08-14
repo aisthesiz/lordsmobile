@@ -103,7 +103,7 @@
                     <div class="custom-control custom-checkbox">
                         <input class="custom-control-input" type="checkbox" id="params.speedUpSettings.generalForBuildOnly"
                             x-model="params.speedUpSettings.generalForBuildOnly">
-                        <label for="params.speedUpSettings.generalForBuildOnly" class="custom-control-label">Use velocidades nromais apenas para construção</label>
+                        <label for="params.speedUpSettings.generalForBuildOnly" class="custom-control-label">Use velocidades normais apenas para construção</label>
                     </div>
                 </div>
 

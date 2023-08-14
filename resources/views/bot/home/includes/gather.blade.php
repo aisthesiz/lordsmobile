@@ -202,13 +202,13 @@
             <p><b>Misc</b></p>
         </div>
 
-        <div class="col-sm-3">
+        {{-- <div class="col-sm-3">
             <div class="form-group">
                 <label>Alcance da coleta</label>
                 <input type="number" step="1" class="form-control" id="params.gatherSettings.maxSearchArea"
                     x-model.number="params.gatherSettings.maxSearchArea">
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-sm-3">
             <div class="form-group">
@@ -218,15 +218,15 @@
             </div>
         </div>
 
-        <div class="col-sm-3">
+        {{-- <div class="col-sm-3">
             <div class="form-group">
                 <label>Atraso coleta (Segundos)</label>
                 <input type="number" step="1" class="form-control" id="params.gatherSettings.sendingDelay"
                     x-model.number="params.gatherSettings.sendingDelay">
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Qtd minima do campo de coleta</label>
                 <input type="number" step="1" class="form-control" id="params.gatherSettings.tileMinimum"
