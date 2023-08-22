@@ -11,11 +11,11 @@
         
         <div class="col-sm-3">
             <div class="form-group">
-                <label>Quantidade máx. de exército a reunir</label>
+                <label>Quantidade máx. de exército a reunir(0 para todos)</label>
                 <input type="number"
                     step="1"
-                    max="10000000"
-                    data-maxvalue="10000000"
+                    max="8"
+                    data-maxvalue="8"
                     class="form-control"
                     id="params.gatherSettings.maxArmysToSend"
                     x-on:change="numberLimit($event)"
@@ -35,6 +35,9 @@
             <div class="form-group">
                 <label for="params.gatherSettings.spareArmyAmount">Quantidade</label>
                 <input type="number" step="1" class="form-control" id="params.gatherSettings.spareArmyAmount"
+                    max="5"
+                    data-maxvalue="5"
+                    x-on:change="numberLimit($event)"
                     x-model.number="params.gatherSettings.spareArmyAmount">
             </div>
         </div>
