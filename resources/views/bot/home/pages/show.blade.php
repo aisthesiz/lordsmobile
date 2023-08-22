@@ -78,6 +78,14 @@
                     toastr.error('Configurações não foram salvas. Recarregue a pagina');
                 }
             },
+            numberLimit(evt) {
+                let number = parseInt(evt.target.value);
+                let maxValue = parseInt(evt.target.getAttribute('data-maxvalue'));
+                console.log(number, maxValue, (number >  maxValue))
+                if(number > maxValue) {
+                    evt.target.value = maxValue;
+                }
+            },
             fgApplyAll(evt) {
                 let list = Object.keys(this.params.eventSettings.guildFest.gfMissionComplete.missionsToComplete_);
                 list.map(index => {

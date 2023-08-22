@@ -12,7 +12,13 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <label>Quantidade máx. de exército a reunir</label>
-                <input type="number" step="1" class="form-control" id="params.gatherSettings.maxArmysToSend"
+                <input type="number"
+                    step="1"
+                    max="10000000"
+                    data-maxvalue="10000000"
+                    class="form-control"
+                    id="params.gatherSettings.maxArmysToSend"
+                    x-on:change="numberLimit($event)"
                     x-model.number="params.gatherSettings.maxArmysToSend">
             </div>
         </div>
