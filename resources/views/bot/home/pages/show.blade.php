@@ -81,7 +81,6 @@
             numberLimit(evt) {
                 let number = parseInt(evt.target.value);
                 let maxValue = parseInt(evt.target.getAttribute('data-maxvalue'));
-                console.log(number, maxValue, (number >  maxValue))
                 if(number > maxValue) {
                     evt.target.value = maxValue;
                 }
