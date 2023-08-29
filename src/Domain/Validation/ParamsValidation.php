@@ -25,6 +25,58 @@ class ParamsValidation
         $this->validateBuildSettings($params->buildSettings ?? null);
         $this->validateEventSettings($params->eventSettings);
         $this->validateResearchSettings($params->researchSettings);
+        $this->validateTroopSettings($params->troopSettings);
+        $this->validateMiscSettings($params->miscSettings);
+    }
+
+    protected function validateMiscSettings($miscSettings)
+    {
+        $this->validateBoolean($miscSettings->useVipPoints, 'miscSettings->useVipPoints');
+        $this->validateBoolean($miscSettings->useExpItems, 'miscSettings->useExpItems');
+        $this->validateBoolean($miscSettings->autoOpenChests, 'miscSettings->autoOpenChests');
+        $this->validateBoolean($miscSettings->autoAttackSkirmish, 'miscSettings->autoAttackSkirmish');
+        $this->validateBoolean($miscSettings->autoAttackFireTrial, 'miscSettings->autoAttackFireTrial');
+        $this->validateBoolean($miscSettings->recallTroopsForSkirmish, 'miscSettings->recallTroopsForSkirmish');
+        $this->validateBoolean($miscSettings->useResourceFromBag, 'miscSettings->useResourceFromBag');
+        $this->validateBoolean($miscSettings->autoTreasureTrove, 'miscSettings->autoTreasureTrove');
+        $this->validateBoolean($miscSettings->useStarScrolls, 'miscSettings->useStarScrolls');
+        $this->validateBoolean($miscSettings->saveGuildStats, 'miscSettings->saveGuildStats');
+        $this->validateBoolean($miscSettings->saveFestStats, 'miscSettings->saveFestStats');
+        $this->validateBoolean($miscSettings->giftUpload, 'miscSettings->giftUpload');
+        $this->validateBoolean($miscSettings->scheduleBuildSpam, 'miscSettings->scheduleBuildSpam');
+        $this->validateString($miscSettings->dayGiftResetTime, 'miscSettings->dayGiftResetTime');
+        $this->validateString($miscSettings->giftResetTime, 'miscSettings->giftResetTime');
+        $this->validateInteger($miscSettings->giftResetType, 'miscSettings->giftResetType');
+        $this->validateInteger($miscSettings->troveTime, 'miscSettings->troveTime');
+        $this->validateInteger($miscSettings->skirmishChapter, 'miscSettings->skirmishChapter');
+        $this->validateInteger($miscSettings->assignedWebhook, 'miscSettings->assignedWebhook');
+        $this->validateInteger($miscSettings->giftResetDay, 'miscSettings->giftResetDay');
+        $this->validateInteger($miscSettings->hourReset, 'miscSettings->hourReset');
+        $this->validateInteger($miscSettings->giftExpMode, 'miscSettings->giftExpMode');
+        $this->validateInteger($miscSettings->scheduleBuildSpamHours, 'miscSettings->scheduleBuildSpamHours');
+        $this->validateInteger($miscSettings->scheduleBuildSpamAmount, 'miscSettings->scheduleBuildSpamAmount');
+        $this->validateInteger($miscSettings->scheduleBuildSpamDelay, 'miscSettings->scheduleBuildSpamDelay');
+        $this->validateFloat($miscSettings->skirmishTroopPercent, 'miscSettings->skirmishTroopPercent');
+    }
+
+    protected function validateTroopSettings($troopSettings)
+    {
+        $this->validateBoolean($troopSettings->autoTrainTroops, 'troopSettings->autoTrainTroops');
+        $this->validateBoolean($troopSettings->autoHealTroops, 'troopSettings->autoHealTroops');
+        $this->validateBoolean($troopSettings->autoHealSanctuary, 'troopSettings->autoHealSanctuary');
+        $this->validateBoolean($troopSettings->autoCraftLunar, 'troopSettings->autoCraftLunar');
+        $this->validateBoolean($troopSettings->rotateTraining, 'troopSettings->rotateTraining');
+        $this->validateInteger($troopSettings->lunarAmount, 'troopSettings->lunarAmount');
+        $this->validateInteger($troopSettings->barrackTrainingLimit, 'troopSettings->barrackTrainingLimit');
+        $this->validateInteger($troopSettings->nowTroopIndex, 'troopSettings->nowTroopIndex');
+
+        $count = 0;
+        foreach ($troopSettings->troopData as $troopData) {
+            $this->validateIntegerArray($troopData, 16, "troopSettings->troopData[{$count}]");
+            $count++;
+        }
+
+        $this->validateIntegerArray($troopSettings->troopData_T5, 4, 'troopSettings->troopData_T5');
     }
 
     protected function validateResearchSettings($researchSettings)

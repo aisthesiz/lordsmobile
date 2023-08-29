@@ -12,6 +12,7 @@
             <li><a href="#tabs-7">Edfícios</a></li>
             <li><a href="#tabs-8">FG</a></li>
             <li><a href="#tabs-9">Pesquisa</a></li>
+            <li><a href="#tabs-10">Tropas</a></li>
         </ul>
         <div id="tabs-1">
             @include('bot.home.includes.general')
@@ -39,6 +40,9 @@
         </div>
         <div id="tabs-9">
             @include('bot.home.includes.research')
+        </div>
+        <div id="tabs-10">
+            @include('bot.home.includes.army')
         </div>
     </div>
 

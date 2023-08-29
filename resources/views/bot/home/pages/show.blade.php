@@ -101,6 +101,7 @@
                 }
                 return value;
             },
+            troopsChapter: 7,
             open: true,
             fg: {
                 valueForAll: 100,
