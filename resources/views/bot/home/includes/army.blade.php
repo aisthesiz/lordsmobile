@@ -60,16 +60,7 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <select class="form-control" x-model.number="troopsChapter">
-                <option value="0">Capítulo 1</option>
-                <option value="1">Capítulo 2</option>
-                <option value="2">Capítulo 3</option>
-                <option value="3">Capítulo 4</option>
-                <option value="4">Capítulo 5</option>
-                <option value="5">Capítulo 6</option>
-                <option value="6">Capítulo 7</option>
-                <option value="7">Capítulo 8</option>
-            </select>
+            <h3>Capitulo 8</h3>
         </div>
     </div>
 
