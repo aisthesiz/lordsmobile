@@ -13,6 +13,7 @@
             <li><a href="#tabs-8">FG</a></li>
             <li><a href="#tabs-9">Pesquisa</a></li>
             <li><a href="#tabs-10">Tropas</a></li>
+            <li><a href="#tabs-11">Monstros</a></li>
         </ul>
         <div id="tabs-1">
             @include('bot.home.includes.general')
@@ -43,6 +44,9 @@
         </div>
         <div id="tabs-10">
             @include('bot.home.includes.army')
+        </div>
+        <div id="tabs-11">
+            @include('bot.home.includes.monsters')
         </div>
     </div>
 
