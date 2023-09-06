@@ -29,6 +29,35 @@ class ParamsValidation
         $this->validateMiscSettings($params->miscSettings);
     }
 
+    protected function validateMonsterSettings($monsterSettings)
+    {
+        $this->validateBoolean($monsterSettings->autoHunting, 'monsterSettings->autoHunting');
+        $this->validateBoolean($monsterSettings->sendMonstersToChat, 'monsterSettings->sendMonstersToChat');
+        $this->validateBoolean($monsterSettings->useBoots, 'monsterSettings->useBoots');
+        $this->validateBoolean($monsterSettings->useEnergyItems, 'monsterSettings->useEnergyItems');
+        $this->validateBoolean($monsterSettings->oneKillHunt, 'monsterSettings->oneKillHunt');
+        $this->validateBoolean($monsterSettings->comboPrediction, 'monsterSettings->comboPrediction');
+        $this->validateBoolean($monsterSettings->allowSaberfang, 'monsterSettings->allowSaberfang');
+        $this->validateBoolean($monsterSettings->avoidConflict, 'monsterSettings->avoidConflict');
+
+        // "": true,
+        // "": false,
+        // "": false,
+        // "": false,
+        // "": true,
+        // "": false,
+        // "": false,
+        // "": false,
+        // "huntSearchArea": 1,
+        // "huntSendDelay": 1000,
+        // "maxWalkTime": 60,
+        // "energyPercentage": 90.0,
+        // "huntMode": 1,
+        // "stealPercentage": 50.0,
+        // "stealCombo": 2,
+        // "heroType": 0,
+    }
+
     protected function validateMiscSettings($miscSettings)
     {
         $this->validateBoolean($miscSettings->useVipPoints, 'miscSettings->useVipPoints');
