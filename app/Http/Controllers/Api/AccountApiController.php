@@ -44,6 +44,7 @@ class AccountApiController extends Controller
             'researchSettings'   => $params->researchSettings   ?? (object)[],
             'troopSettings'      => $params->troopSettings      ?? (object)[],
             'miscSettings'       => $params->miscSettings       ?? (object)[],
+            'monsterSettings'    => $params->monsterSettings    ?? (object)[],
         ];
     }
 }

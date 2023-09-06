@@ -51,6 +51,7 @@ class AccountApiControllerTest extends TestCase
                 'researchSettings'   => [],
                 'troopSettings'      => [],
                 'miscSettings'       => [],
+                'monsterSettings'    => [],
             ]
         ]);
     }

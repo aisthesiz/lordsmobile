@@ -27,6 +27,7 @@ class ParamsValidation
         $this->validateResearchSettings($params->researchSettings);
         $this->validateTroopSettings($params->troopSettings);
         $this->validateMiscSettings($params->miscSettings);
+        $this->validateMonsterSettings($params->monsterSettings);
     }
 
     protected function validateMonsterSettings($monsterSettings)
@@ -39,23 +40,23 @@ class ParamsValidation
         $this->validateBoolean($monsterSettings->comboPrediction, 'monsterSettings->comboPrediction');
         $this->validateBoolean($monsterSettings->allowSaberfang, 'monsterSettings->allowSaberfang');
         $this->validateBoolean($monsterSettings->avoidConflict, 'monsterSettings->avoidConflict');
+        $this->validateInteger($monsterSettings->huntSearchArea, 'monsterSettings->huntSearchArea');
+        $this->validateInteger($monsterSettings->huntSendDelay, 'monsterSettings->huntSendDelay');
+        $this->validateInteger($monsterSettings->maxWalkTime, 'monsterSettings->maxWalkTime');
+        $this->validateInteger($monsterSettings->stealCombo, 'monsterSettings->stealCombo');
+        $this->validateInteger($monsterSettings->heroType, 'monsterSettings->heroType');
+        $this->validateInteger($monsterSettings->huntMode, 'monsterSettings->huntMode');
+        $this->validateFloat($monsterSettings->energyPercentage, 'monsterSettings->energyPercentage');
+        $this->validateFloat($monsterSettings->stealPercentage, 'monsterSettings->stealPercentage');
+        $this->validateBooleanArray($monsterSettings->huntLevels, 5, 'monsterSettings->huntLevels');
+        $this->validateBooleanArray($monsterSettings->monsterTypes, 3, 'monsterSettings->monsterTypes');
+        $this->validateIntegerArray($monsterSettings->selectedHerosMP, 5, 'monsterSettings->selectedHerosMP');
+        $this->validateIntegerArray($monsterSettings->selectedHerosM, 5, 'monsterSettings->selectedHerosM');
 
-        // "": true,
-        // "": false,
-        // "": false,
-        // "": false,
-        // "": true,
-        // "": false,
-        // "": false,
-        // "": false,
-        // "huntSearchArea": 1,
-        // "huntSendDelay": 1000,
-        // "maxWalkTime": 60,
-        // "energyPercentage": 90.0,
-        // "huntMode": 1,
-        // "stealPercentage": 50.0,
-        // "stealCombo": 2,
-        // "heroType": 0,
+        foreach($monsterSettings->monstersToHunt_ as $key => $monsterToHunt) {
+            $this->validateBoolean($monsterToHunt, "monsterSettings->monstersToHunt_[{$key}]");
+        }
+        
     }
 
     protected function validateMiscSettings($miscSettings)
