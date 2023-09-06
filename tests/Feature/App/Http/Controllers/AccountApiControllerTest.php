@@ -47,6 +47,10 @@ class AccountApiControllerTest extends TestCase
                 'heroStageSettings'  => [],
                 'arenaSettings'      => [],
                 'buildSettings'      => [],
+                'eventSettings'      => [],
+                'researchSettings'   => [],
+                'troopSettings'      => [],
+                'miscSettings'       => [],
             ]
         ]);
     }

@@ -42,6 +42,8 @@ class AccountApiController extends Controller
             'buildSettings'      => $params->buildSettings      ?? (object)[],
             'eventSettings'      => $params->eventSettings      ?? (object)[],
             'researchSettings'   => $params->researchSettings   ?? (object)[],
+            'troopSettings'      => $params->troopSettings      ?? (object)[],
+            'miscSettings'       => $params->miscSettings       ?? (object)[],
         ];
     }
 }
