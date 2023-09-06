@@ -56,7 +56,6 @@ class ParamsValidation
         foreach($monsterSettings->monstersToHunt_ as $key => $monsterToHunt) {
             $this->validateBoolean($monsterToHunt, "monsterSettings->monstersToHunt_[{$key}]");
         }
-        
     }
 
     protected function validateMiscSettings($miscSettings)
