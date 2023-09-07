@@ -30,7 +30,9 @@ class AccountApiController extends Controller
 
         $account = AccountEntityBuilder::createFromAccountModel($accountDb);
 
-        return response()->json($account->params)->setStatusCode(200);
+        return response()
+                ->json($this->prepareParamsToResponse($account->params))
+                ->setStatusCode(200);
     }
 
     protected function prepareParamsToResponse($params)
