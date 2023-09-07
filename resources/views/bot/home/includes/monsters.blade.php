@@ -225,4 +225,129 @@
             </div>
         </div>
     </div>
+
+    {{-- <div class="row mt-4">
+        <div class="col-sm-3">Caçar Monstros Selecionados</div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input class="custom-control-input"
+                    type="checkbox"
+                    id="asdfdsdftfds"
+                    x|model="">
+                <label
+                    for="asdfdsdftfds"
+                    class="custom-control-label font-weight-light">Selecionar Todos</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <img style="width: 30px" src="{{ url('assets/images/research_icons/economy.jpg') }}"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    id="params.monsterSettings.monstersToHunt_['0']"
+                    x-model="params.monsterSettings.monstersToHunt_['0']" />
+                <label for="params.monsterSettings.monstersToHunt_['0']"
+                    class="custom-control-label font-weight-light">Frostwing</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <img style="width: 30px" src="{{ url('assets/images/research_icons/economy.jpg') }}"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    id="params.monsterSettings.monstersToHunt_['1']"
+                    x-model="params.monsterSettings.monstersToHunt_['1']" />
+                <label for="params.monsterSettings.monstersToHunt_['1']"
+                    class="custom-control-label font-weight-light">Gargantua</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <img style="width: 30px" src="{{ url('assets/images/research_icons/economy.jpg') }}"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    id="params.monsterSettings.monstersToHunt_['2']"
+                    x-model="params.monsterSettings.monstersToHunt_['2']" />
+                <label for="params.monsterSettings.monstersToHunt_['2']"
+                    class="custom-control-label font-weight-light">Snow Beast</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <img style="width: 30px" src="{{ url('assets/images/research_icons/economy.jpg') }}"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    id="params.monsterSettings.monstersToHunt_['3']"
+                    x-model="params.monsterSettings.monstersToHunt_['3']" />
+                <label for="params.monsterSettings.monstersToHunt_['3']"
+                    class="custom-control-label font-weight-light">Jade Wyrm</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1">
+            <img style="width: 30px" src="{{ url('assets/images/research_icons/economy.jpg') }}"/>
+        </div>
+        <div class="col-sm-4">
+            <div class="custom-control custom-checkbox">
+                <input
+                    class="custom-control-input"
+                    type="checkbox"
+                    id="params.monsterSettings.monstersToHunt_['4']"
+                    x-model="params.monsterSettings.monstersToHunt_['4']" />
+                <label for="params.monsterSettings.monstersToHunt_['4']"
+                    class="custom-control-label font-weight-light">Gryphon</label>
+            </div>
+        </div>
+    </div> --}}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Caçar</th>
+                <th></th>
+                <th>Nome</th>
+                <th>Forte Contra</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template x-for="(monster, index) in monsters" :key="index">
+                <tr>
+                    <td>
+                        <input
+                            type="checkbox"
+                            x-model="params.monsterSettings.monstersToHunt_[monster.index]" />
+                    </td>
+                    <td><img style="width: 40px" :src="'/assets/images/monsters_icon/' + monster.index + '.webp'" alt="Monster Image"></td>
+                    <td x-text="monster.name"></td>
+                    <td x-text="monster.strongAgainst"></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
 </div>
