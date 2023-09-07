@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <div class="row mt-4">
+    {{-- <div class="row mt-4">
         <div class="col-sm-3">Caçar Monstros Selecionados</div>
         <div class="col-sm-4">
             <div class="custom-control custom-checkbox">
@@ -324,5 +324,30 @@
                     class="custom-control-label font-weight-light">Gryphon</label>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Caçar</th>
+                <th></th>
+                <th>Nome</th>
+                <th>Forte Contra</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template x-for="(monster, index) in monsters" :key="index">
+                <tr>
+                    <td>
+                        <input
+                            type="checkbox"
+                            x-model="params.monsterSettings.monstersToHunt_[monster.index]" />
+                    </td>
+                    <td><img style="width: 40px" :src="'/assets/images/monsters_icon/' + monster.index + '.webp'" alt="Monster Image"></td>
+                    <td x-text="monster.name"></td>
+                    <td x-text="monster.strongAgainst"></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
 </div>
