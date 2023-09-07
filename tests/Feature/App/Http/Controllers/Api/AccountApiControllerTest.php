@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\App\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\Api;
 
 use App\Builder\AccountEntityBuilder;
 use App\Models\Account;
@@ -47,8 +47,6 @@ class AccountApiControllerTest extends TestCase
                 'heroStageSettings'  => [],
                 'arenaSettings'      => [],
                 'buildSettings'      => [],
-                'eventSettings'      => [],
-                'researchSettings'   => [],
                 'troopSettings'      => [],
                 'miscSettings'       => [],
                 'monsterSettings'    => [],
@@ -92,5 +90,65 @@ class AccountApiControllerTest extends TestCase
         );
 
         $response->assertStatus(403);
+    }
+
+    public function test_get_by_id_when_account_id_is_invalid()
+    {
+        $role = Role::create(['name' => 'api']);
+        $permission = Permission::create(['name' => 'read api']);
+        $permission2 = Permission::create(['name' => 'write api']);
+        $role->givePermissionTo($permission, $permission2);
+
+        $userApi = User::factory()->create();
+        $userApi->assignRole($role);
+        $this->actingAs($userApi);
+
+        $response = $this->json('get',
+            route('api.accounts.get-by-id', '487598579457'),
+        );
+// $response->dd();
+        $response->assertJsonStructure(['message']);
+        $this->assertEquals("Conta não encontrada", $response->json('message'));
+        $response->assertStatus(404);
+    }
+
+    public function test_get_by_id_with_valid_id()
+    {
+        $role = Role::create(['name' => 'api']);
+        $permission = Permission::create(['name' => 'read api']);
+        $permission2 = Permission::create(['name' => 'write api']);
+        $role->givePermissionTo($permission, $permission2);
+
+        $userApi = User::factory()->create();
+        $userApi->assignRole($role);
+
+        $this->actingAs($userApi, 'web');
+
+        $accountModel = Account::factory()->create();
+        $account = AccountEntityBuilder::createFromAccountModel($accountModel);
+
+        $response = $this->json('get',
+            route('api.accounts.get-by-id', $account->lordAccountId),
+        );
+
+        $response->assertJsonStructure([
+            'speedUpSettings',
+            'gatherSettings',
+            'rallySettings',
+            'connectionSettings',
+            'cargoShipSettings',
+            'supplySettings',
+            'heroSettings',
+            'heroStageSettings',
+            'arenaSettings',
+            'buildSettings',
+            'eventSettings',
+            'researchSettings',
+            'troopSettings',
+            'miscSettings',
+            'monsterSettings',
+        ]);
+
+        $response->assertStatus(200);
     }
 }
