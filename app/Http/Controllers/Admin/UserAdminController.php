@@ -18,8 +18,14 @@ class UserAdminController extends Controller
 
     public function index()
     {
-        $users = $this->repository->paginate();
-        return view('admin.users.index', compact('users'));
+        $query = $this->repository->query();
+        $term = filter_input(INPUT_GET, 'q');
+        if ($term) {
+            $query->where('name', 'LIKE', '%'.$term.'%')
+                ->orWhere('email', 'LIKE', '%'.$term.'%');
+        }
+        $users = $query->paginate();
+        return view('admin.users.index', compact('users', 'term'));
     }
 
     public function create()

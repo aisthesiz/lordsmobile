@@ -3,7 +3,9 @@
 @section('title', __('Users'))
 
 @section('content_header')
-    <h1>{{ __('Users') }} <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+    <h1>
+        <a href="{{ route('admin.users.index') }}">Usuários</a>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
     </h1>
 
 @stop
@@ -12,7 +14,20 @@
     @include('admin.includes.alert')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('List of') }} {{ __('Users') }}</h3>
+            <div class="card-title">
+                <form action="{{ route('admin.users.index') }}">
+                    <x-adminlte-input name="q" igroup-size="md" value="{{ $term }}">
+                        <x-slot name="appendSlot">
+                            <x-adminlte-button theme="outline-danger" type="submit" label="Go!"/>
+                        </x-slot>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text text-danger">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+                </form>
+            </div>
             <div class="card-tools">
                 {!! $users->links() !!}
             </div>
@@ -23,9 +38,9 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">#</th>
-                    <th style="width: 300px">{{ __('Name') }}</th>
+                    <th style="width: 300px">Nome</th>
                     <th style="width: 40%">Email</th>
-                    <th style="width:120px">{{ __('Actions') }}</th>
+                    <th style="width:120px">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,6 +74,5 @@
         <div class="card-footer">
             {!! $users->links() !!}
         </div>
-
     </div>
 @stop
