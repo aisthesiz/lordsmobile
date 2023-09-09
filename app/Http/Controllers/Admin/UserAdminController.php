@@ -75,7 +75,11 @@ class UserAdminController extends Controller
             if(!$user = $this->repository->findOrFail($id)) {
                 throw new \Exception('Item not founded', 404);
             }
+            $accounts = $user->accounts;
             $user->delete();
+            foreach ($accounts as $account) {
+                $account->delete();
+            }
             return redirect()->route('admin.users.index')->with('success', __('Deleted with success'));
         } catch (\Exception $e) {
             return redirect()->route('admin.users.index')->with('error', __('Error, try again. '.$e->getMessage()));
