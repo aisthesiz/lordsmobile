@@ -53,7 +53,6 @@
                 
                 @foreach($accounts as $item)
                     <tr>
-                        <td><a href="{{ route('admin.users.edit', $item->user->id) }}">{{ $item->user->name }}</a></td>
                         <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
                         <td class="">
                             @if ($item->time_end->lt(now()))
