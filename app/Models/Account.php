@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\ParamsCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
@@ -41,9 +42,12 @@ class Account extends Model
         'params'            => ParamsCast::class,
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(
+            related: User::class,
+            foreignKey: 'user_id',
+        );
     }
 
     public function is_active(): bool
