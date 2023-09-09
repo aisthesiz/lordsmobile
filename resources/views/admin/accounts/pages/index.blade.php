@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>
-        Contas Lord Mobile
+        <a href="{{ route('admin.accounts.index') }}">Contas Lord Mobile</a>
     </h1>
 
 @stop
@@ -14,7 +14,20 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Lista de Contas Lord Mobile</h3>
+            <div class="card-title">
+                <form action="{{ route('admin.accounts.index') }}">
+                    <x-adminlte-input name="q" igroup-size="md" value="{{ $term }}">
+                        <x-slot name="appendSlot">
+                            <x-adminlte-button theme="outline-danger" type="submit" label="Go!"/>
+                        </x-slot>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text text-danger">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+                </form>
+            </div>
             <div class="card-tools">
                 {!! $accounts->links() !!}
             </div>
@@ -24,18 +37,22 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th style="width: 100px">#</th>
+                    <th style="width: 100px">IGG</th>
+                    <th style="width: 100px">Nome</th>
                     <th style="width: 100px">Usuário</th>
                     <th style="width: 30px">Ativa</th>
                     <th style="width: 10px">Status</th>
                     <th style="width: 100px">Dt Inicio</th>
                     <th style="width: 100px">Dt Final</th>
+                    <th style="width: 100px">Ativo Em</th>
+                    <th style="width: 100px">Desativo Em</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($accounts as $item)
                     <tr>
                         <td><a href="{{ route('admin.user.accounts.edit', [$item->user, $item]) }}">{{ $item->lord_account_id }}</a></td>
+                        <td><a href="{{ route('admin.user.accounts.edit', [$item->user, $item]) }}">{{ $item->name }}</a></td>
                         <td><a href="{{ route('admin.users.edit', $item->user->id) }}">{{ $item->user->name }}</a></td>
                         <td><input type="checkbox" disabled @if($item->is_active === true) checked @endif/></td>
                         <td class="">
@@ -49,6 +66,8 @@
                         </td>
                         <td>{{ $item->time_start?->format('d/m/Y') ?? '-' }}</td>
                         <td>{{ $item->time_end?->format('d/m/Y') ?? '-' }}</td>
+                        <td>{{ $item->activated_at?->format('d/m/Y') ?? '-' }}</td>
+                        <td>{{ $item->deactivated_at?->format('d/m/Y') ?? '-' }}</td>
                     </tr>
                 @endforeach
                 </tbody>

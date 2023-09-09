@@ -27,14 +27,21 @@ class AccountAdminController extends Controller
     {
         $query = $this->repository->query();
         $timeEnd = $request->get('time_end');
+        $term = $request->get('q');
         if (!empty($timeEnd)) {
             $timeEnd = Carbon::createFromFormat('Y-m-d', $timeEnd);
             $query = $query->where('time_end', '<', $timeEnd->format('Y-m-d 23:59:59'));
         }
+
+        if (!empty($term)) {
+            $query = $query->where('name', 'LIKE', "%{$term}%")
+                ->orWhere('lord_account_id', 'LIKE', "%{$term}%");
+        }
+
         $accounts = $query->paginate();
         return view(
             view: 'admin.accounts.pages.index',
-            data: compact('accounts'),
+            data: compact('accounts', 'term'),
         );
     }
 
