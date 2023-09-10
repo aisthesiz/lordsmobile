@@ -324,6 +324,12 @@ return [
             'can'  => 'user.admin',
         ],
         [
+            'text' => 'Contas Lord Mobile',
+            'route' => 'admin.accounts.index',
+            'icon' => 'fas fa-user',
+            'can'  => 'accounts.admin',
+        ],
+        [
             'text' => 'Transferência de contas',
             'route' => 'admin.account-transfer.index',
             'icon' => 'fas fa-toilet',
